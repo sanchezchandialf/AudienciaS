@@ -100,15 +100,52 @@ export default function Form() {
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        p: 4,
-        maxWidth: 800,
-        margin: "0 auto",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      p: 4,
+      maxWidth: 800,
+      margin: "64px auto 0",
+      minHeight: "calc(100vh - 64px)",
+      width: "100%",
+      boxSizing: "border-box",
+      backgroundColor: "#00203a",
+      paddingTop: "10px",
+      "& .MuiInputLabel-root": {
+        color: "#fff",
+      },
+      "& .MuiOutlinedInput-root": {
+        "& fieldset": {
+        borderColor: "#063565",
+        },
+        "&:hover fieldset": {
+        borderColor: "#5059bc",
+        },
+        "&.Mui-focused fieldset": {
+        borderColor: "#f56df9",
+        },
+      },
+      "& .MuiInputBase-input": {
+        color: "#fff",
+      },
+      "& .MuiSelect-icon": {
+        color: "#fff",
+      },
+      "& .MuiMenuItem-root": {
+        color: "#00203a",
+      },
       }}
     >
-      <Typography variant="h3" component="h1" gutterBottom sx={{ mb: 4 }}>
+      <Typography 
+        variant="h3" 
+        component="h1" 
+        gutterBottom 
+        sx={{ 
+          mb: 4,
+          color: "#f56df9",
+          textAlign: "center"
+        }}
+      >
         Formulario de Audiencias
       </Typography>
 
@@ -298,7 +335,14 @@ export default function Form() {
         type="submit"
         variant="contained"
         size="large"
-        sx={{ width: 300 }}
+        sx={{ 
+          width: 300,
+          backgroundColor: "#5059bc",
+          "&:hover": {
+            backgroundColor: "#f56df9",
+          },
+          mt: 1
+        }}
         disabled={isSubmitting}
       >
         {isSubmitting ? <CircularProgress size={24} /> : "Enviar Solicitud"}

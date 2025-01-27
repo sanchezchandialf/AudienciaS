@@ -11,6 +11,7 @@ import NavListDrawer from "./NavListDrawer";
 import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
+import LogoS from "../../assets/LogoS.png";
 
 interface menuItems {
   text: string;
@@ -28,24 +29,30 @@ export default function Navbar({ menuItems }: NavbarProps) {
     <>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setOpen(true)}
-            sx={{ mr: 2, display: { sm: "none", xs: "block" } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Audiencias
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setOpen(true)}
+              sx={{ mr: 2, display: { sm: "none", xs: "block" } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Box sx={{ flexGrow: 1, display: "flex", alignItems: "left" }}>
+              <img
+                src={LogoS}
+                alt="Logo"
+                style={{ height: '100px', marginRight: '16px', objectFit: 'contain' }}
+              />
+            </Box>
+          </Box>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {menuItems.map((link) => (
               <Button
                 key={link.text}
-                sx={{ color: "#fff" }}
+                sx={{ color: "#fff", mx: 1 }}
                 component={NavLink}
                 to={link.href}
               >
