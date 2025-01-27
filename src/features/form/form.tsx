@@ -227,7 +227,20 @@ export default function Form() {
               </FormControl>
             )}
           />
-
+          <Controller
+            name="derivadaA"
+            control={control}
+            rules={{ required: "Complete este campo" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Derivado a"
+                fullWidth
+                error={!!errors.derivadaA}
+                helperText={errors.derivadaA?.message}
+              />
+            )}
+          />
           <Controller
             name="atendidoPor"
             control={control}
