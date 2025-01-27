@@ -14,12 +14,12 @@ export default function Home() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "70vh",
         textAlign: "center",
         gap: 4,
       }}
     >
-      <Typography variant="h1" component="h1">
+      <Typography variant="h1" color="#c8d29c">
         Audiencias
       </Typography>
       <Button variant="contained" onClick={() => handleredirect()}>

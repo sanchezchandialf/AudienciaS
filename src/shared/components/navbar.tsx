@@ -27,7 +27,7 @@ export default function Navbar({ menuItems }: NavbarProps) {
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" sx={{ backgroundColor: "#f26df9" }}>
         <Toolbar>
           <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
             <IconButton
@@ -44,7 +44,11 @@ export default function Navbar({ menuItems }: NavbarProps) {
               <img
                 src={LogoS}
                 alt="Logo"
-                style={{ height: '100px', marginRight: '16px', objectFit: 'contain' }}
+                style={{
+                  height: "100px",
+                  marginRight: "16px",
+                  objectFit: "contain",
+                }}
               />
             </Box>
           </Box>

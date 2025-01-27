@@ -73,47 +73,46 @@ const theme = createTheme({
       secondary: "#cccccc",
     },
   },
-  
-    components: {
-        MuiTextField: {
-          styleOverrides: {
-            root: {
-              "& .MuiInputLabel-root": {
-                color: "#fff", // Color del label
-              },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#063565", // Color del borde
-                },
-                "&:hover fieldset": {
-                  borderColor: "#5059bc", // Color del borde al hacer hover
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#f56df9", // Color del borde al estar enfocado
-                },
-              },
-              "& .MuiInputBase-input": {
-                color: "#fff", // Color del texto del input
-              },
+
+  components: {
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          "& .MuiInputLabel-root": {
+            color: "#fff", // Color del label
+          },
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#063565", // Color del borde
+            },
+            "&:hover fieldset": {
+              borderColor: "#5059bc", // Color del borde al hacer hover
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#f56df9", // Color del borde al estar enfocado
             },
           },
-        },
-        MuiSelect: {
-          styleOverrides: {
-            icon: {
-              color: "#fff", // Color del ícono del Select
-            },
-          },
-        },
-        MuiMenuItem: {
-          styleOverrides: {
-            root: {
-              color: "#00203a", // Color del texto del MenuItem
-            },
+          "& .MuiInputBase-input": {
+            color: "#fff", // Color del texto del input
           },
         },
       },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        icon: {
+          color: "#fff", // Color del ícono del Select
+        },
+      },
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          color: "#00203a", // Color del texto del MenuItem
+        },
+      },
+    },
   },
-);
+});
 
 export default theme;
