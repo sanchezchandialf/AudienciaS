@@ -22,7 +22,12 @@ export default function NavListDrawer({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <Box sx={{ width: 250, bgcolor: "lightsalmon" }}>
+    <Box sx={{ width: 250,
+      "& .MuiListItemButton-root:hover": {
+        backgroundColor: "#f56df9",
+        color: "#fff",
+      },
+     }}>
       <nav>
         <List>
           {menuItems.map((item) => (

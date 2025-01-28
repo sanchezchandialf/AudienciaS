@@ -19,7 +19,7 @@ export default function Home() {
         gap: 4,
       }}
     >
-      <Typography variant="h1" color="#c8d29c">
+      <Typography variant="h1" color="secondary">
         Audiencias
       </Typography>
       <Button variant="contained" onClick={() => handleredirect()}>
