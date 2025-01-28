@@ -5,7 +5,6 @@ import {
   Drawer,
   IconButton,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import NavListDrawer from "./NavListDrawer";
 import { useState } from "react";
