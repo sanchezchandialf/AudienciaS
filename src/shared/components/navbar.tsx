@@ -51,11 +51,11 @@ export default function Navbar({ menuItems }: NavbarProps) {
               />
             </Box>
           </Box>
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+          <Box sx={{ display: { xs: "none", sm: "block" }}}> 
             {menuItems.map((link) => (
               <Button
                 key={link.text}
-                sx={{ color: "#fff", mx: 1 }}
+                sx={{ color: "#fff", mx: 1 , ":hover": { backgroundColor: " #c8d29c" } }}
                 component={NavLink}
                 to={link.href}
               >

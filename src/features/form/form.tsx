@@ -119,20 +119,23 @@ export default function Form() {
         borderColor: "#063565",
         },
         "&:hover fieldset": {
-        borderColor: "#5059bc",
+        borderColor: " #c8d29c",
         },
         "&.Mui-focused fieldset": {
-        borderColor: "#f56df9",
+        borderColor: " #c8d29c",
         },
       },
       "& .MuiInputBase-input": {
-        color: "#fff",
+        color: "fff",
       },
       "& .MuiSelect-icon": {
-        color: "#fff",
+        color: "#c8d29c",
       },
       "& .MuiMenuItem-root": {
-        color: "#00203a",
+        color: " #c8d29c",
+      },
+      "& .MuiFormLabel-root": {
+        color: "#fff",
       },
       }}
     >

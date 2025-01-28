@@ -64,6 +64,7 @@ const theme = createTheme({
     secondary: {
       main: "#f56df9",
     },
+    
     background: {
       default: "#00203a",
       paper: "#063565",
@@ -71,6 +72,7 @@ const theme = createTheme({
     text: {
       primary: "#ffffff",
       secondary: "#cccccc",
+
     },
   },
 
@@ -86,11 +88,14 @@ const theme = createTheme({
               borderColor: "#063565", // Color del borde
             },
             "&:hover fieldset": {
-              borderColor: "#5059bc", // Color del borde al hacer hover
+              borderColor: "#c8d29c", // Color del borde al hacer hover
             },
             "&.Mui-focused fieldset": {
-              borderColor: "#f56df9", // Color del borde al estar enfocado
+              borderColor: "#c8d29c", // Color del borde al estar enfocado
             },
+            "&.Mui-focused": {
+              color: "#fff", // Color del texto al estar enf
+
           },
           "& .MuiInputBase-input": {
             color: "#fff", // Color del texto del input
@@ -98,21 +103,28 @@ const theme = createTheme({
         },
       },
     },
+  },
     MuiSelect: {
       styleOverrides: {
         icon: {
-          color: "#fff", // Color del ícono del Select
+          color: "#c8d29c", // Color del ícono del Select
         },
       },
     },
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          color: "#00203a", // Color del texto del MenuItem
+          color: "#fff",
+          "&:hover":{
+            backgroundColor: "#f56df9", // Color del MenuItem al hacer hover
+            color: "#fff", // Color del texto del MenuItem al hacer hover
+          },
+          } // Color del texto del MenuItem
         },
       },
+      
     },
   },
-});
+);
 
 export default theme;
