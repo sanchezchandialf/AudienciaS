@@ -11,7 +11,7 @@ import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import LogoS from "../../assets/LogoS.png";
-
+import logoedit from "../../assets/logoedit.png";
 interface menuItems {
   text: string;
   href: string;
@@ -26,7 +26,7 @@ export default function Navbar({ menuItems }: NavbarProps) {
 
   return (
     <>
-      <AppBar position="static" sx={{ backgroundColor: "#f26df9" }}>
+      <AppBar position="static" elevation={4} sx={{ backgroundColor: "#f26df9",borderRadius:"2px",boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",overflow:"hidden" }}>
         <Toolbar>
           <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
             <IconButton
@@ -41,13 +41,14 @@ export default function Navbar({ menuItems }: NavbarProps) {
             </IconButton>
             <Box sx={{ flexGrow: 1, display: "flex", alignItems: "left" }}>
               <img
-                src={LogoS}
-                alt="Logo"
-                style={{
-                  height: "100px",
-                  marginRight: "16px",
-                  objectFit: "contain",
-                }}
+              src={logoedit}
+              alt="Logo"
+              style={{
+                height: "70px",
+                marginTop: "15px",
+                marginBottom: "15px",
+                objectFit: "contain",
+              }}
               />
             </Box>
           </Box>
