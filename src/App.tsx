@@ -4,6 +4,7 @@ import Home from "./features/home/home";
 import LoginPage from "./features/authentication/login";
 import Form from "./features/form/form";
 import { GlobalStyles } from "@mui/material";
+import { UserProvider } from "./context/useAuth";
 
 interface menuItems {
   text: string;
@@ -17,6 +18,7 @@ const menuItems = [
 export default function App() {
   return (
     <>
+      <UserProvider>
       <Navbar menuItems={menuItems} />
       <GlobalStyles
         styles={{
@@ -34,6 +36,10 @@ export default function App() {
         <Route path="/form" element={<Home />} />
         <Route path="/audiencias" element={<Form />} />
       </Routes>
+
+
+      </UserProvider>
+      
     </>
   );
 }
