@@ -1,6 +1,6 @@
 import { UserProfile, UserProfileToken } from '../models/user';
 import React, { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { replace, useNavigate } from 'react-router-dom';
 import { login } from '../services/AuthService';
 import toast from 'react-hot-toast';
 type UserContextType = {
@@ -49,7 +49,7 @@ export const UserProvider  : FC<PropsWithChildren>= ({children}) => {
         setToken(res?.data.token!);
         setUser(userObj!);
         toast.success("Login Success!");
-        navigate("/search");
+        navigate("/");
       }
   
         
