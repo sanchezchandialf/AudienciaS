@@ -1,14 +1,15 @@
 import axios from 'axios';
 
-const api="http://localhost:7255/api";
+const api="https://localhost:7255/api";
 
 export const login = async (email: string, password: string) => {
   
     try{
-        const response = await axios.post(`${api}/Acceso/login`, {
+        const response = await axios.post(`${api}/Acesso/login`, {
             Correo: email,
             Clave: password,
           });
+          console.log(response.data);
           return response.data;
     
     }catch(error:any){
