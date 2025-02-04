@@ -120,7 +120,7 @@ const LoginPage: FC = () => {
           flexDirection: "column",
           width: 300,
           backgroundColor: "#5059bc",
-          color: "#fff",  // ✅ FIX: antes tenía "secondary"
+          color: "#fff",  
           ":hover": { backgroundColor: "#063565" },
           paddingTop: "10px",
           paddingBottom: "10px",

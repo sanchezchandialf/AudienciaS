@@ -1,11 +1,17 @@
-import axios from 'axios';
-
+import axios, { AxiosResponse } from 'axios';
+import {UserProfileToken } from '../models/user';
 const api="https://localhost:7255/api";
+
+type LoginRequestBody = {
+    Correo: string;
+    Clave: string;
+  };
+
 
 export const login = async (email: string, password: string) => {
   
     try{
-        const response = await axios.post(`${api}/Acesso/login`, {
+        const response = await axios.post<UserProfileToken,AxiosResponse<UserProfileToken>,LoginRequestBody>(`${api}/Acesso/login`, {
             Correo: email,
             Clave: password,
           });

@@ -1,6 +1,6 @@
 import { UserProfile, UserProfileToken } from '../models/user';
 import React, { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
-import { replace, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { login } from '../services/AuthService';
 import toast from 'react-hot-toast';
 type UserContextType = {
@@ -28,6 +28,7 @@ export const UserProvider  : FC<PropsWithChildren>= ({children}) => {
         if(user && token){
             setUser(JSON.parse(user));
             setToken(token);
+           
         }
         setIsReady(true);
     }, []);
@@ -36,27 +37,34 @@ export const UserProvider  : FC<PropsWithChildren>= ({children}) => {
       try {
         const res=await login(email, contraseña)
          
+        console.log(res);
+        if (!res.token) {
+          toast.error("Invalid credentials");
+
+
+        }
+        localStorage.setItem("token", res?.token);
         
-        if (res) {
-        localStorage.setItem("token", res?.data.token);
-        const userObj = {
-          id: res?.data.usuario.idUsuario,
-          userName: res?.data.usuario.nombre,
-          email: res?.data.usuario.correo,
-          isAdmin: res?.data.usuario.esAdmin,
-        };
+        
+        const userObj = res.usuario;
         localStorage.setItem("user", JSON.stringify(userObj));
-        setToken(res?.data.token!);
+        setToken(res?.token!);
         setUser(userObj!);
         toast.success("Login Success!");
-        navigate("/");
+        navigate("/estadisticas");
       }
   
         
-      } catch (error) {  
+       catch (error) {  
+        console.error("Error en la autentificacion", error);
         toast.error("Server error occured");
       }
       
+      useEffect(() => {
+        if (user && token) {
+          navigate("/audiencias");
+        }
+      }, [user, token, navigate]);
          
       };
 
@@ -76,7 +84,7 @@ export const UserProvider  : FC<PropsWithChildren>= ({children}) => {
         <UserContext.Provider
           value={{ loginUser, user, token, logout, isLoggedIn,  }}
         >
-          {isReady ? children : null}
+          {isReady ? children : <div>Loading...</div>}
         </UserContext.Provider>
       );
     };

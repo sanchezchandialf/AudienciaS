@@ -1,18 +1,16 @@
+// main.tsx - Archivo principal corregido
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-
-import App from "./App.tsx";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { BrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
 import theme from "./shared/components/theme.tsx";
+import router from "./router/Router.tsx"; // Asegúrate de importar el router corregido
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 );
