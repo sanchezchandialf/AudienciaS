@@ -6,6 +6,8 @@ import Estadistic from "../features/users/estadistic";
 import { UserProvider } from "../context/useAuth";
 import Navbar from "../shared/components/navbar";
 import Layout from "../shared/components/layouts";
+import AuthorizedComponent from "./AuthenticateRoute";
+import Form from "../features/form/form";
 
 const Router = createBrowserRouter([
    
@@ -15,9 +17,14 @@ const Router = createBrowserRouter([
     {
         path:BrowserRoutes.HOME,
         element:(
+            
+
             <UserProvider>
             < Home />
             </UserProvider>
+            
+           
+            
           
         ),
     },
@@ -33,12 +40,12 @@ const Router = createBrowserRouter([
     {
         path:BrowserRoutes.FORM,
         element:(
-            <UserProvider><Home /></UserProvider>
+            <UserProvider><Form/></UserProvider>
             
         )
     },
     {
-        path:BrowserRoutes.AUDIENCIAS,
+        path:BrowserRoutes.ESTADISTICAS,
         element:(
             <UserProvider> <Estadistic /></UserProvider>
         )

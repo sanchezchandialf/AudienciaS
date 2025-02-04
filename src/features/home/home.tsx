@@ -5,7 +5,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const handleredirect = () => {
-    navigate("/audiencias");
+    navigate("/form");
   };
   return (
     <Box
