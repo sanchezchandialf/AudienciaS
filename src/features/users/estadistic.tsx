@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AuthorizedComponent from "../../router/AuthenticateRoute";
-import { Box, Typography } from "@mui/material";
+import { Box, colors, Divider, Typography } from "@mui/material";
 
 const Estadistic: React.FC = () => {
     const [userName, setUserName] = useState<string>('');
@@ -26,6 +26,8 @@ const Estadistic: React.FC = () => {
                     Bienvenido {userName}
                 </Typography>
             )}
+
+            <Divider sx={{ backgroundColor: colors.common.white }}></Divider>
             
             <AuthorizedComponent requiredRole={true}>
                 <div>
