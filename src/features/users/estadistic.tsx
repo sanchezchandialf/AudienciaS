@@ -16,11 +16,7 @@ const Estadistic: React.FC = () => {
           title: "Gestion de Audiencias",
           description: "Gestiona tus audiencias",
         },
-        {
-          icon: <GroupIcon color="primary" />,
-          title: "Consultar monto trabajadores",
-          description: "Conocé la información sobre tu Crédito ANSES vigente",
-        },
+        
         {
           icon: <CalendarTodayIcon color="primary" />,
           title: "Mi Calendario",

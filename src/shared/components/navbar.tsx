@@ -5,6 +5,7 @@ import {
   Drawer,
   IconButton,
   Toolbar,
+  Typography,
 } from "@mui/material";
 import NavListDrawer from "./NavListDrawer";
 import { useState } from "react";
@@ -12,6 +13,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink } from "react-router-dom";
 import LogoS from "../../assets/LogoS.png";
 import logoedit from "../../assets/logoedit.png";
+import AuthorizedComponent from "../../router/AuthenticateRoute";
+import { useEffect } from "react";
 interface menuItems {
   text: string;
   href: string;
@@ -23,6 +26,23 @@ interface NavbarProps {
 
 export default function Navbar({ menuItems }: NavbarProps) {
   const [open, setOpen] = useState(false);
+
+
+  const [userName, setUserName] = useState<string>('');
+      //Es necesario Parsear el json para poder obtener los datos 
+      useEffect(() => {
+      
+          const storedUser = localStorage.getItem('user');
+          
+          if (storedUser) {
+            
+              const userObj = JSON.parse(storedUser);
+              
+             
+              setUserName(userObj.nombre); 
+            
+          }
+      }, []);
 
   return (
     <>
@@ -64,6 +84,17 @@ export default function Navbar({ menuItems }: NavbarProps) {
               </Button>
             ))}
           </Box>
+          <AuthorizedComponent requiredRole={true}>
+          <Box>
+              <Button>
+
+                <Typography variant="h1">hola</Typography>
+              </Button>
+
+          </Box>
+
+          </AuthorizedComponent>
+        
         </Toolbar>
       </AppBar>
 
