@@ -12,8 +12,17 @@ import Form from "../features/form/form";
 const Router = createBrowserRouter([
    
    {
-        element:<Layout/>,
+   
+        element:(
+            <UserProvider>
+            <Layout/>,
+            </UserProvider>
+        
+
+        ),
+       
         children:[
+        
     {
         path:BrowserRoutes.HOME,
         element:(

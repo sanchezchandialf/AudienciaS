@@ -1,12 +1,14 @@
 // App.tsx (componente principal de layout)
-import Navbar from "./shared/components/navbar";
+
 import { Outlet } from "react-router-dom";
 import { GlobalStyles } from "@mui/material";
+
 
 export default function App() {
   return (
     <>
-      <GlobalStyles
+   
+    <GlobalStyles
         styles={{
           body: {
             margin: 0,
@@ -18,6 +20,9 @@ export default function App() {
       />
       
       <Outlet />
+
+ 
+     
     </>
   );
 }
