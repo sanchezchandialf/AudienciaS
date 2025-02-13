@@ -1,4 +1,4 @@
-const API_URL: Readonly<string> = "https://amiable-learning-production.up.railway.app/";
+const API_URL: Readonly<string> ="https://localhost:7255/api";
 
 interface FetchApiParams {
   path: string;

@@ -7,8 +7,10 @@
     nombreEmpresa: string;
     idCargo: number;
     idClasificacion: number;
-    idEstado: number;
+    estado: string;
     atendidoPor: number;
     derivadoA: string;
     asunto: string;
   }
+
+  

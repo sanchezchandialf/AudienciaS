@@ -8,6 +8,7 @@ import Navbar from "../shared/components/navbar";
 import Layout from "../shared/components/layouts";
 import AuthorizedComponent from "./AuthenticateRoute";
 import Form from "../features/form/form";
+import AudienciasList from "../features/users/components/AudienciasList";
 
 const Router = createBrowserRouter([
    
@@ -57,6 +58,12 @@ const Router = createBrowserRouter([
         path:BrowserRoutes.ESTADISTICAS,
         element:(
             <UserProvider> <Estadistic /></UserProvider>
+        )
+    },
+    {
+        path:BrowserRoutes.MISAUDIENCIAS,
+        element:(
+            <UserProvider><AudienciasList/></UserProvider>
         )
     }
     	]
