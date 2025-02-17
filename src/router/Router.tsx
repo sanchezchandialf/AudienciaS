@@ -3,74 +3,50 @@ import { BrowserRoutes } from "./BrowserRoutes";
 import Home from "../features/home/home";
 import LoginPage from "../features/authentication/login";
 import Estadistic from "../features/users/estadistic";
-import { UserProvider } from "../context/useAuth";
-import Navbar from "../shared/components/navbar";
 import Layout from "../shared/components/layouts";
 import AuthorizedComponent from "./AuthenticateRoute";
 import Form from "../features/form/form";
 import AudienciasList from "../features/users/components/AudienciasList";
+import { UserProvider } from "../context/useAuth.tsx"; // Importa aquí
 
 const Router = createBrowserRouter([
-   
-   {
-   
-        element:(
-            <UserProvider>
-            <Layout/>,
-            </UserProvider>
-        
-
+  {
+    element: (
+      <UserProvider> {/* Envuelve el Layout con UserProvider */}
+        <Layout />
+      </UserProvider>
+    ),
+    children: [
+      {
+        path: BrowserRoutes.HOME,
+        element: <Home />,
+      },
+      {
+        path: BrowserRoutes.LOGIN,
+        element: <LoginPage />,
+      },
+      {
+        path: BrowserRoutes.FORM,
+        element: <Form />,
+      },
+      {
+        path: BrowserRoutes.ESTADISTICAS,
+        element: (
+          <AuthorizedComponent>
+            <Estadistic />
+          </AuthorizedComponent>
         ),
-       
-        children:[
-        
-    {
-        path:BrowserRoutes.HOME,
-        element:(
-            
-
-            <UserProvider>
-            < Home />
-            </UserProvider>
-            
-           
-            
-          
+      },
+      {
+        path: BrowserRoutes.MISAUDIENCIAS,
+        element: (
+          <AuthorizedComponent>
+            <AudienciasList />
+          </AuthorizedComponent>
         ),
-    },
-    {
-        path:BrowserRoutes.LOGIN,
-        element:(
-            <UserProvider>
-                <LoginPage />
-            </UserProvider>
-            
-        )
-    },
-    {
-        path:BrowserRoutes.FORM,
-        element:(
-            <UserProvider><Form/></UserProvider>
-            
-        )
-    },
-    {
-        path:BrowserRoutes.ESTADISTICAS,
-        element:(
-            <UserProvider> <Estadistic /></UserProvider>
-        )
-    },
-    {
-        path:BrowserRoutes.MISAUDIENCIAS,
-        element:(
-            <UserProvider><AudienciasList/></UserProvider>
-        )
-    }
-    	]
-   }
-   
-   
-    
+      },
+    ],
+  },
 ]);
 
-export default Router
+export default Router;

@@ -70,7 +70,7 @@ const AudienciasList = () => {
                   <TableCell>{new Date(audiencia.fecha).toLocaleDateString()}</TableCell>
                   <TableCell>{audiencia.dni}</TableCell>
                   <TableCell>{audiencia.nombreEmpresa}</TableCell>
-                  <TableCell>{audiencia.estado}</TableCell>
+                  <TableCell>{audiencia.idEstado}</TableCell>
                   <TableCell>{audiencia.atendidoPor}</TableCell>
                   <TableCell>{audiencia.asunto}</TableCell>
                 </TableRow>

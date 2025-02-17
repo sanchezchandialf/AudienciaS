@@ -7,10 +7,30 @@
     nombreEmpresa: string;
     idCargo: number;
     idClasificacion: number;
-    estado: string;
+    idEstado: string;
     atendidoPor: number;
     derivadoA: string;
     asunto: string;
   }
 
+  export default interface Empleados {
+    idEmpleado: number;  // Cambia "IdEmpleado" a "idEmpleado"
+    nombre: string;      // Cambia "Nombre" a "nombre"
+    apellido: string;    // Cambia "Apellido" a "apellido"
+  }
   
+  export  interface Clasificaciones {
+    idclasificacion:number,
+    clasificacion:string,
+  }
+
+  export  interface Cargo{
+    idCargo:number;
+    nombreCargo:string;
+
+  }
+
+  export  interface Estado{
+    idestado:number,
+    nombre:string,
+  }
