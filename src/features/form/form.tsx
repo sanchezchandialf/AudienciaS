@@ -64,8 +64,7 @@ export default function Form() {
 
     const formattedData = {
       ...data,
-      fecha: new Date(data.fecha).toISOString(), // Convertir fecha a ISO
-      idEstado: Number(data.idEstado), // Corregir el nombre del campo
+      fecha: new Date(data.fecha).toISOString(), 
       idCargo: Number(data.idCargo),
       idClasificacion: Number(data.idClasificacion),
       atendidoPor: Number(data.atendidoPor),
@@ -250,11 +249,11 @@ export default function Form() {
         )}
       />
        <Controller
-        name="idEstado"
+        name="estado"
         control={control}
         rules={{ required: "Seleccione un estado" }}
         render={({ field }) => (
-          <FormControl fullWidth error={!!errors.idEstado} sx={{ mb: 2 }}>
+          <FormControl fullWidth error={!!errors.estado} sx={{ mb: 2 }}>
             <InputLabel>Estado</InputLabel>
             <Select {...field} label="Estado">
               {estado.map((est) => (
