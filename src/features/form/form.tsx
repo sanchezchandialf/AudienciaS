@@ -79,7 +79,7 @@ export default function Form() {
      
 
       });
-      if (response.code ===200 && response.data){
+      if ((response.code ===200 || response.code ===201) && response.data){
         setSnackbarOpen(true);
         console.log("enviado correctamente",response.data)
         reset();

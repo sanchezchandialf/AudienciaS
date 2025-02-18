@@ -10,7 +10,7 @@ import {
 import NavListDrawer from "./NavListDrawer";
 import { useState, useEffect } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logoedit from "../../assets/logoedit.png";
 import { useAuth } from "../../context/useAuth";
 
@@ -26,7 +26,11 @@ interface NavbarProps {
 export default function Navbar({ menuItems }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
+  const handleredirect = () => {
+    navigate("/estadisticas");
+  };
   const handleLogout = () => {
     logout();
   };
@@ -81,7 +85,19 @@ export default function Navbar({ menuItems }: NavbarProps) {
                 {link.text}
               </Button>
             ))}
-
+             {/* si el usuario esta logueado muestra solo este boton  */}
+             {user && (
+              <Button
+              sx={{
+                color: "#fff",
+                mx: 1,
+                ":hover": { backgroundColor: " #c8d29c" },
+              }}
+              onClick={handleredirect}
+              >
+              Mi Gestion
+              </Button>
+            )}
             {/* si el usuario esta logueado muestra solo este boton  */}
             {user && (
               <Button
