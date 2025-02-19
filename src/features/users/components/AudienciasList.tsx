@@ -1,36 +1,34 @@
 import { useEffect, useState } from "react";
 import { FetchApi } from "../../../api/useAxios";
-import Audiencia from "../../../Types/Types";
-import { Alert, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
-
+import  Audiencia  from "../../../Types/Types";
+import { Alert, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import BackButton from "../../../shared/components/ButtomBack";
+import Search from "../../../shared/components/filter";
+import EditIcon from '@mui/icons-material/Edit';
+import PageviewIcon from '@mui/icons-material/Pageview';
 const AudienciasList = () => {
-  // creamos un usestate de audiencias donde se van a cargar las audiencias
   const [audiencias, setAudiencias] = useState<Audiencia[]>([]);
-  // va a indicar si la api sigue cargando los datos, se inicia en verdadero
+  const [filteredAudiencias, setFilteredAudiencias] = useState<Audiencia[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  // guarda un msj de error
   const [error, setError] = useState<string | null>(null);
 
-  // este useEffect maneja la carga de las audiencias
   useEffect(() => {
     const fetchAudiencias = async () => {
-      // Cargamos las audiencias, el mensaje de error arranca en null y el loading en verdadero
       setLoading(true);
       setError(null);
 
-      const token=localStorage.getItem('token')
-
+      const token = localStorage.getItem("token");
 
       const response = await FetchApi<Audiencia[]>({
         path: "/Form",
         method: "GET",
-        requiresAuth:true,
-        token:token || "", 
-        
+        requiresAuth: true,
+        token: token || "",
       });
 
       if (response.code === 200 && response.data) {
         setAudiencias(response.data);
+        setFilteredAudiencias(response.data); // Inicializa la lista filtrada con todos los datos
       } else {
         setError(response.message);
       }
@@ -40,11 +38,27 @@ const AudienciasList = () => {
     fetchAudiencias();
   }, []);
 
+  // Función para manejar la búsqueda
+  const handleSearch = (query: string) => {
+    const lowerQuery = query.toLowerCase();
+  
+    const filtered = audiencias.filter((audiencia) =>
+      audiencia.nombreEmpresa.toLowerCase().includes(lowerQuery) ||
+      audiencia.correoElectronico.toLowerCase().includes(lowerQuery) ||
+      audiencia.dni.toString().includes(lowerQuery) || // Convertimos DNI a string para buscar
+      audiencia.asunto.toLowerCase().includes(lowerQuery)
+    );
+  
+    setFilteredAudiencias(filtered);
+  };
+  
+
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h5" gutterBottom>
         Lista audiencias
       </Typography>
+      <Search onSearch={handleSearch} /> {/* Pasamos la función de búsqueda */}
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}></Box>
       ) : error ? (
@@ -61,10 +75,11 @@ const AudienciasList = () => {
                 <TableCell><b>Estado</b></TableCell>
                 <TableCell><b>AtendidoPor</b></TableCell>
                 <TableCell><b>Asunto</b></TableCell>
+                <TableCell><b>Acciones</b></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {audiencias.map((audiencia) => (
+              {filteredAudiencias.map((audiencia) => (
                 <TableRow key={audiencia.idAudiencia}>
                   <TableCell>{audiencia.correoElectronico}</TableCell>
                   <TableCell>{new Date(audiencia.fecha).toLocaleDateString()}</TableCell>
@@ -73,12 +88,32 @@ const AudienciasList = () => {
                   <TableCell>{audiencia?.estado!}</TableCell>
                   <TableCell>{audiencia.atendidoPor}</TableCell>
                   <TableCell>{audiencia.asunto}</TableCell>
+                  <TableCell>
+                    <Button variant="outlined"
+                    color="secondary"
+                    startIcon={<EditIcon />} 
+                    onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
+                    >
+                      Editar
+                    </Button>
+
+                    <Button variant="outlined"
+                    color="secondary"
+                    startIcon={<PageviewIcon />} 
+                    onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
+                    >
+                      Ver
+                    </Button>
+                    </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       )}
+      <Box sx={{ padding: 3 }}>
+        <BackButton />
+      </Box>
     </Box>
   );
 };

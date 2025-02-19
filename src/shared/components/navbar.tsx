@@ -31,6 +31,10 @@ export default function Navbar({ menuItems }: NavbarProps) {
   const handleredirect = () => {
     navigate("/estadisticas");
   };
+
+  const handleredirect2 = () => {
+    navigate("/form");
+  };
   const handleLogout = () => {
     logout();
   };
@@ -85,7 +89,20 @@ export default function Navbar({ menuItems }: NavbarProps) {
                 {link.text}
               </Button>
             ))}
-             {/* si el usuario esta logueado muestra solo este boton  */}
+            {/* si el usuario esta logueado muestra  este boton  */}
+            {user && (
+              <Button
+              sx={{
+                color: "#fff",
+                mx: 1,
+                ":hover": { backgroundColor: " #c8d29c" },
+              }}
+              onClick={handleredirect2}
+              >
+              Gestionar Audiencia
+              </Button>
+            )}
+             {/* si el usuario esta logueado muestra  este boton  */}
              {user && (
               <Button
               sx={{
@@ -98,7 +115,7 @@ export default function Navbar({ menuItems }: NavbarProps) {
               Mi Gestion
               </Button>
             )}
-            {/* si el usuario esta logueado muestra solo este boton  */}
+            {/* si el usuario esta logueado muestra  este boton  */}
             {user && (
               <Button
               sx={{
