@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
 import { FetchApi } from "../../../api/useAxios";
-import  Audiencia  from "../../../Types/Types";
+import Audiencia from "../../../Types/Types";
 import { Alert, Box, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import BackButton from "../../../shared/components/ButtomBack";
 import Search from "../../../shared/components/filter";
 import EditIcon from '@mui/icons-material/Edit';
 import PageviewIcon from '@mui/icons-material/Pageview';
+import ViewAudiencias from "./viewAudiencias";
+import generarPDF from "./generadorpdf";
+
+
 const AudienciasList = () => {
   const [audiencias, setAudiencias] = useState<Audiencia[]>([]);
   const [filteredAudiencias, setFilteredAudiencias] = useState<Audiencia[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [selectedAudiencia, setSelectedAudiencia] = useState<Audiencia | null>(null);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchAudiencias = async () => {
@@ -27,8 +34,9 @@ const AudienciasList = () => {
       });
 
       if (response.code === 200 && response.data) {
+        
         setAudiencias(response.data);
-        setFilteredAudiencias(response.data); // Inicializa la lista filtrada con todos los datos
+        setFilteredAudiencias(response.data);
       } else {
         setError(response.message);
       }
@@ -38,27 +46,30 @@ const AudienciasList = () => {
     fetchAudiencias();
   }, []);
 
-  // Función para manejar la búsqueda
   const handleSearch = (query: string) => {
     const lowerQuery = query.toLowerCase();
   
     const filtered = audiencias.filter((audiencia) =>
       audiencia.nombreEmpresa.toLowerCase().includes(lowerQuery) ||
       audiencia.correoElectronico.toLowerCase().includes(lowerQuery) ||
-      audiencia.dni.toString().includes(lowerQuery) || // Convertimos DNI a string para buscar
+      audiencia.dni.toString().includes(lowerQuery) ||
       audiencia.asunto.toLowerCase().includes(lowerQuery)
     );
   
     setFilteredAudiencias(filtered);
   };
-  
+
+  const handleViewAudiencia = (audiencia: Audiencia) => {
+    setSelectedAudiencia(audiencia);
+    setModalOpen(true);
+  };
 
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h5" gutterBottom>
         Lista audiencias
       </Typography>
-      <Search onSearch={handleSearch} /> {/* Pasamos la función de búsqueda */}
+      <Search onSearch={handleSearch} />
       {loading ? (
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}></Box>
       ) : error ? (
@@ -82,38 +93,54 @@ const AudienciasList = () => {
               {filteredAudiencias.map((audiencia) => (
                 <TableRow key={audiencia.idAudiencia}>
                   <TableCell>{audiencia.correoElectronico}</TableCell>
-                  <TableCell>{new Date(audiencia.fecha).toLocaleDateString()}</TableCell>
+                  <TableCell>{audiencia.fecha}</TableCell>
                   <TableCell>{audiencia.dni}</TableCell>
                   <TableCell>{audiencia.nombreEmpresa}</TableCell>
                   <TableCell>{audiencia?.estado!}</TableCell>
                   <TableCell>{audiencia.atendidoPor}</TableCell>
                   <TableCell>{audiencia.asunto}</TableCell>
                   <TableCell>
-                    <Button variant="outlined"
-                    color="secondary"
-                    startIcon={<EditIcon />} 
-                    onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
-                    >
-                      Editar
-                    </Button>
-
-                    <Button variant="outlined"
-                    color="secondary"
-                    startIcon={<PageviewIcon />} 
-                    onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
-                    >
-                      Ver
-                    </Button>
-                    </TableCell>
+                    <Box sx={{ display: 'flex', gap: 1 }}>
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        startIcon={<EditIcon />}
+                        onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        color="secondary"
+                        startIcon={<PageviewIcon />}
+                        onClick={() => handleViewAudiencia(audiencia)}
+                      >
+                        Ver
+                      </Button>
+                    </Box>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       )}
-      <Box sx={{ padding: 3 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', padding: 3 }}>
         <BackButton />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => generarPDF(filteredAudiencias,"audiencias",[0,5])}
+        >
+          Generar PDF
+        </Button>
       </Box>
+      {/* Modal de ViewAudiencias */}
+      <ViewAudiencias
+        audiencia={selectedAudiencia}
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </Box>
   );
 };
