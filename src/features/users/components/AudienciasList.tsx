@@ -99,26 +99,28 @@ const AudienciasList = () => {
                   <TableCell>{audiencia?.estado!}</TableCell>
                   <TableCell>{audiencia.atendidoPor}</TableCell>
                   <TableCell>{audiencia.asunto}</TableCell>
-                  <TableCell>
+                    <TableCell>
                     <Box sx={{ display: 'flex', gap: 1 }}>
                       <Button
-                        variant="outlined"
-                        color="primary"
-                        startIcon={<EditIcon />}
-                        onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      startIcon={<EditIcon />}
+                      onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
                       >
-                        Editar
+                      Editar
                       </Button>
                       <Button
-                        variant="outlined"
-                        color="secondary"
-                        startIcon={<PageviewIcon />}
-                        onClick={() => handleViewAudiencia(audiencia)}
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      startIcon={<PageviewIcon />}
+                      onClick={() => handleViewAudiencia(audiencia)}
                       >
-                        Ver
+                      Ver
                       </Button>
                     </Box>
-                  </TableCell>
+                    </TableCell>
                 </TableRow>
               ))}
             </TableBody>

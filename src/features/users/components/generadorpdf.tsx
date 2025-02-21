@@ -1,6 +1,9 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
+
+
+//  Generador pdf generico
 const generarPDF = (lista: any[], asunto: string, columnasOcultas: number[] = []) => {
     if (lista.length === 0) {
         console.error("La lista está vacía, no se generará el PDF.");
@@ -16,12 +19,15 @@ const generarPDF = (lista: any[], asunto: string, columnasOcultas: number[] = []
     doc.line(10, 17, 280, 17);
 
     // **Obtener nombres de columnas**
+    
     const todasLasColumnas = Object.keys(lista[0]);
 
     // **Filtrar columnas visibles excluyendo las que están en "columnasOcultas"**
+    
     const columnasVisibles = todasLasColumnas.filter((_, index) => !columnasOcultas.includes(index));
-
+    
     // **Generar tabla filtrada**
+    
     autoTable(doc, {
         startY: 25,
         head: [columnasVisibles], // Solo columnas visibles

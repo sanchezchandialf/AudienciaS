@@ -3,6 +3,8 @@ import { Modal, Box, Typography, Button } from '@mui/material';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import Audiencia from '../../../Types/Types';
+import { object } from 'yup';
+import generarPDF from './informeindividual';
 
 interface ViewAudienciasProps {
     audiencia: Audiencia | null;
@@ -11,30 +13,6 @@ interface ViewAudienciasProps {
 }
 
 const ViewAudiencias: React.FC<ViewAudienciasProps> = ({ audiencia, open, onClose }) => {
-
-    const generarPDF = () => {
-        if (!audiencia) return;
-
-        const doc = new jsPDF();
-        
-        doc.setFontSize(18);
-        doc.text("Detalle de la Audiencia", 14, 20);
-
-        autoTable(doc, {
-            startY: 30,
-            head: [['Campo', 'Valor']],
-            body: [
-                ['Nombre', audiencia.nombreEmpresa],
-                ['Correo', audiencia.correoElectronico],
-                ['DNI', audiencia.dni],
-                ['Asunto', audiencia.asunto],
-                ['Estado', audiencia.estado],
-                ['Atendido por', audiencia.atendidoPor]
-            ],
-        });
-
-        doc.save(`audiencia_${audiencia.dni}.pdf`);
-    };
 
     return (
         <Modal
@@ -75,7 +53,7 @@ const ViewAudiencias: React.FC<ViewAudienciasProps> = ({ audiencia, open, onClos
                     <Button variant="contained" color="primary" onClick={onClose} sx={{ mr: 2 }}>
                         Cerrar
                     </Button>
-                    <Button variant="contained" color="secondary" onClick={generarPDF}>
+                    <Button variant="contained" color="secondary" onClick={() => generarPDF({ audiencia })}>
                         Generar Reporte
                     </Button>
                 </Box>
