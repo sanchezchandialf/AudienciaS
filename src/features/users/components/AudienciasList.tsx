@@ -8,6 +8,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import ViewAudiencias from "./viewAudiencias";
 import generarPDF from "./generadorpdf";
+import { useNavigate } from "react-router-dom";
+import { BrowserRoutes } from "../../../router/BrowserRoutes";
 
 
 const AudienciasList = () => {
@@ -64,6 +66,12 @@ const AudienciasList = () => {
     setModalOpen(true);
   };
 
+  const navigate = useNavigate();
+
+  const handleEdit = (idAudiencia: number) => {
+    navigate(`${BrowserRoutes.EDITAR_AUDICENCIA.replace(':id', idAudiencia.toString())}`);
+};
+
   return (
     <Box sx={{ padding: 3 }}>
       <Typography variant="h5" gutterBottom>
@@ -106,7 +114,7 @@ const AudienciasList = () => {
                       color="primary"
                       size="small"
                       startIcon={<EditIcon />}
-                      onClick={() => console.log(`Editar ${audiencia.idAudiencia}`)}
+                      onClick={() => handleEdit(audiencia.idAudiencia)}
                       >
                       Editar
                       </Button>

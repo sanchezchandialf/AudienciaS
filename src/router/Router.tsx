@@ -8,6 +8,7 @@ import AuthorizedComponent from "./AuthenticateRoute";
 import Form from "../features/form/form";
 import AudienciasList from "../features/users/components/AudienciasList";
 import { UserProvider } from "../context/useAuth.tsx"; // Importa aquí
+import EditView from "../features/users/components/editview.tsx";
 
 const Router = createBrowserRouter([
   {
@@ -42,6 +43,14 @@ const Router = createBrowserRouter([
         element: (
           <AuthorizedComponent>
             <AudienciasList />
+          </AuthorizedComponent>
+        ),
+      },
+      {
+        path: BrowserRoutes.EDITAR_AUDICENCIA,
+        element: (
+          <AuthorizedComponent>
+            <EditView/>
           </AuthorizedComponent>
         ),
       },

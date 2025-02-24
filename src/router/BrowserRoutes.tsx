@@ -4,7 +4,8 @@ export enum BrowserRoutes {
     FORM = '/form',
     AUDIENCIAS = '/audiencias',
     ESTADISTICAS = '/estadisticas',
-    MISAUDIENCIAS='/misaudiencias'
+    MISAUDIENCIAS='/misaudiencias',
+    EDITAR_AUDICENCIA='/editaraudiencia/:id'
   }
   
   
