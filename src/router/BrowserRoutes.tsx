@@ -1,6 +1,6 @@
 export enum BrowserRoutes {
-    HOME = '/',
-    LOGIN = '/login',
+    HOME = '/home',
+    LOGIN = '/',
     FORM = '/form',
     AUDIENCIAS = '/audiencias',
     ESTADISTICAS = '/estadisticas',

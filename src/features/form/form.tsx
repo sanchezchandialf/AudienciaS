@@ -14,7 +14,7 @@ import {
 
 import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { FetchApi } from "../../api/useAxios";
 import Empleados, { Cargo, Clasificaciones, Estado } from "../../Types/Types";
 import { data } from "react-router-dom";
@@ -29,64 +29,67 @@ export default function Form() {
   const [estado, setEstado] = useState<Estado[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
+  const token = localStorage.getItem("token")
   useEffect(() => {
+
+    if (!token) return;
     // Maneja la carga de los empleados en el form 
-   const fetchData=async()=>{
-    
-    try {
-        const [empleadoRes,cargoRes,clasificacionesRes,estadoRes]=await Promise.all([
+    const fetchData = async () => {
+
+      try {
+        const [empleadoRes, cargoRes, clasificacionesRes, estadoRes] = await Promise.all([
           FetchApi<Empleados[]>({ path: "/Empleado", method: "GET" }),
           FetchApi<Cargo[]>({ path: "/Cargo", method: "GET" }),
           FetchApi<Clasificaciones[]>({ path: "/Clasificaciones", method: "GET" }),
           FetchApi<Estado[]>({ path: "/Estado", method: "GET" })
 
         ]);
-     
-      console.log(clasificacionesRes.data)
-      if (empleadoRes.code === 200 && empleadoRes.data) setEmpleados(empleadoRes.data);
-      if (cargoRes.code === 200 && cargoRes.data) setCargo(cargoRes.data);
-      if (clasificacionesRes.code === 200 && clasificacionesRes.data) setClasificaciones(clasificacionesRes.data);
-      if (estadoRes.code === 200 && estadoRes.data) setEstado(estadoRes.data);
-    } catch (error) {
-      console.error("error al obtener datos ",error)
-    }
-   };
-   fetchData();
+
+        console.log(clasificacionesRes.data)
+        if (empleadoRes.code === 200 && empleadoRes.data) setEmpleados(empleadoRes.data);
+        if (cargoRes.code === 200 && cargoRes.data) setCargo(cargoRes.data);
+        if (clasificacionesRes.code === 200 && clasificacionesRes.data) setClasificaciones(clasificacionesRes.data);
+        if (estadoRes.code === 200 && estadoRes.data) setEstado(estadoRes.data);
+      } catch (error) {
+        console.error("error al obtener datos ", error)
+      }
+    };
+    fetchData();
   }, []);
 
   const handleSnackbarClose = () => {
-   
+
     setSnackbarOpen(false);
   };
 
-  const onSubmit=async (data:Audiencia)=>{
+  const onSubmit = async (data: Audiencia) => {
 
     const formattedData = {
       ...data,
-      fecha: new Date(data.fecha).toISOString(), 
+      fecha: new Date(data.fecha).toISOString(),
       idCargo: Number(data.idCargo),
       idClasificacion: Number(data.idClasificacion),
       atendidoPor: Number(data.atendidoPor),
     };
-    console.log("Datos enviados al back",formattedData)
-    try{
-      console.log("formulario enviado",data);
-      const response=await FetchApi<Audiencia>({
-        path:"/Form",
+    console.log("Datos enviados al back", formattedData)
+    try {
+      console.log("formulario enviado", data);
+      const response = await FetchApi<Audiencia>({
+        path: "/Form",
         method: "POST",
-        payload:formattedData,
-     
+
+        payload: formattedData,
+
 
       });
-      if ((response.code ===200 || response.code ===201) && response.data){
+      if ((response.code === 200 || response.code === 201) && response.data) {
         setSnackbarOpen(true);
-        console.log("enviado correctamente",response.data)
+        console.log("enviado correctamente", response.data)
         reset();
-      }else{
-        console.error("error al enviar el formulario",response)
+      } else {
+        console.error("error al enviar el formulario", response)
       }
-    }catch(error){
+    } catch (error) {
 
     }
   }
@@ -102,100 +105,100 @@ export default function Form() {
         borderRadius: 2,
       }}
     >
-         <Controller
-            name="correoElectronico"
-            control={control}
-            rules={{ required: "Email es requerido", pattern: /^\S+@\S+$/i }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Correo electrónico"
-                fullWidth
-                error={!!errors.correoElectronico}
-                helperText={errors.correoElectronico?.message?.toString()}
-              />
-            )}
+      <Controller
+        name="correoElectronico"
+        control={control}
+        rules={{ required: "Email es requerido", pattern: /^\S+@\S+$/i }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Correo electrónico"
+            fullWidth
+            error={!!errors.correoElectronico}
+            helperText={errors.correoElectronico?.message?.toString()}
           />
-        <Controller
-              name="fecha"
-              control={control}
-              rules={{ required: "Fecha es requerida" }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Fecha"
-                  type="date"
-                  fullWidth
-                  InputLabelProps={{ shrink: true }}
-                  error={!!errors.fecha}
-                  helperText={errors.fecha?.message?.toString()}
-                />
-              )}
-            />
- <Controller
-              name="dni"
-              control={control}
-              rules={{
-                required: "DNI es requerido",
-                pattern: {
-                  value: /^[0-9]{8,10}$/,
-                  message: "DNI inválido",
-                },
-              }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="DNI"
-                  fullWidth
-                  error={!!errors.dni}
-                  helperText={errors.dni?.message?.toString()}
-                />
-              )}
-            />
-            <Controller
-            name="nombreEmpresa"
-            control={control}
-            rules={{ required: "Nombre de empresa es requerido" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Nombre de la empresa"
-                fullWidth
-                error={!!errors.nombreEmpresa}
-                helperText={errors.nombreEmpresa?.message?.toString()}
-              />
-            )}
+        )}
+      />
+      <Controller
+        name="fecha"
+        control={control}
+        rules={{ required: "Fecha es requerida" }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Fecha"
+            type="date"
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            error={!!errors.fecha}
+            helperText={errors.fecha?.message?.toString()}
           />
-        <Controller
-            name="derivadoA"
-            control={control}
-            rules={{ required: "Complete este campo" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Derivado a"
-                fullWidth
-                error={!!errors.derivadoA}
-                helperText={errors.derivadoA?.message?.toString()}
-              />
-            )}
+        )}
+      />
+      <Controller
+        name="dni"
+        control={control}
+        rules={{
+          required: "DNI es requerido",
+          pattern: {
+            value: /^[0-9]{8,10}$/,
+            message: "DNI inválido",
+          },
+        }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="DNI"
+            fullWidth
+            error={!!errors.dni}
+            helperText={errors.dni?.message?.toString()}
           />
-       <Controller
-            name="asunto"
-            control={control}
-            rules={{ required: "Asunto es requerido" }}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Asunto"
-                fullWidth
-                multiline
-                rows={4}
-                error={!!errors.asunto}
-                helperText={errors.asunto?.message?.toString()}
-              />
-            )}
+        )}
+      />
+      <Controller
+        name="nombreEmpresa"
+        control={control}
+        rules={{ required: "Nombre de empresa es requerido" }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Nombre de la empresa"
+            fullWidth
+            error={!!errors.nombreEmpresa}
+            helperText={errors.nombreEmpresa?.message?.toString()}
           />
+        )}
+      />
+      <Controller
+        name="derivadoA"
+        control={control}
+        rules={{ required: "Complete este campo" }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Derivado a"
+            fullWidth
+            error={!!errors.derivadoA}
+            helperText={errors.derivadoA?.message?.toString()}
+          />
+        )}
+      />
+      <Controller
+        name="asunto"
+        control={control}
+        rules={{ required: "Asunto es requerido" }}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Asunto"
+            fullWidth
+            multiline
+            rows={4}
+            error={!!errors.asunto}
+            helperText={errors.asunto?.message?.toString()}
+          />
+        )}
+      />
 
       <Controller
         name="atendidoPor"
@@ -231,7 +234,7 @@ export default function Form() {
           </FormControl>
         )}
       />
-         <Controller
+      <Controller
         name="idClasificacion"
         control={control}
         rules={{ required: "Seleccione una clasificacion" }}
@@ -248,7 +251,7 @@ export default function Form() {
           </FormControl>
         )}
       />
-       <Controller
+      <Controller
         name="idEstado"
         control={control}
         rules={{ required: "Seleccione un estado" }}
@@ -266,8 +269,8 @@ export default function Form() {
         )}
       />
 
-         {/* Botón de envío */}
-         <Button type="submit" variant="contained" size="large" sx={{ width: "100%", backgroundColor: "#5059bc", mt: 2 }} disabled={isSubmitting}>
+      {/* Botón de envío */}
+      <Button type="submit" variant="contained" size="large" sx={{ width: "100%", backgroundColor: "#5059bc", mt: 2 }} disabled={isSubmitting}>
         {isSubmitting ? <CircularProgress size={24} /> : "Enviar Solicitud"}
       </Button>
 

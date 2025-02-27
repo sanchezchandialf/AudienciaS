@@ -19,13 +19,19 @@ const Router = createBrowserRouter([
     ),
     children: [
       {
+        path: BrowserRoutes.LOGIN,
+        element: 
+          <LoginPage />,
+
+        
+      },
+
+
+      {
         path: BrowserRoutes.HOME,
         element: <Home />,
       },
-      {
-        path: BrowserRoutes.LOGIN,
-        element: <LoginPage />,
-      },
+
       {
         path: BrowserRoutes.FORM,
         element: <Form />,
@@ -50,7 +56,7 @@ const Router = createBrowserRouter([
         path: BrowserRoutes.EDITAR_AUDICENCIA,
         element: (
           <AuthorizedComponent>
-            <EditView/>
+            <EditView />
           </AuthorizedComponent>
         ),
       },

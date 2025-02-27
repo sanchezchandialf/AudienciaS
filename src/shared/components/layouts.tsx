@@ -12,8 +12,8 @@ const Layout: React.FC = () => {
     <>
       <Navbar
         menuItems={[
-         ...(!user ?[{ text: "Inicio", href: "/" }] :[] ) ,
-          ...(!user ? [{ text: "Login", href: "/login" }] : []), // Muestra Login solo si no hay usuario
+       
+          ...(!user ? [{ text: "Login", href: "/" }] : []), // Muestra Login solo si no hay usuario
         ]}
       />
       <Outlet />
