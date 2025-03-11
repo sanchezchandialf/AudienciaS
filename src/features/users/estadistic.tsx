@@ -23,7 +23,7 @@ const Estadistic: React.FC = () => {
       icon: <CalendarTodayIcon color="primary" />,
       title: "Mi Calendario",
       description: "Consultá tus fechas disponibles",
-      path: "/misaudiencias"
+      path: "/calendario"
     },
     {
       icon: <WorkHistoryIcon color="primary" />,

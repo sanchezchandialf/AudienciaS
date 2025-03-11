@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FetchApi } from "../../api/useAxios";
 import Audiencia from "../../Types/Types";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, CircularProgress, Alert } from "@mui/material";
 import { DateCalendar, PickersDay } from '@mui/x-date-pickers';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -30,7 +30,7 @@ const Calendario: React.FC = () => {
             if (response.code === 200 && response.data) {
                 setAudiencias(response.data);
             } else {
-                setError(response.message);
+                setError(response.message || "Error al cargar los datos.");
             }
             setLoading(false);
         };
@@ -39,63 +39,93 @@ const Calendario: React.FC = () => {
     }, []);
 
     return (
-        <Box display="flex" height="100vh" border="1px solid black">
+        <Box display="flex" height="100vh">
             {/* 🗓️ Columna con el calendario */}
-            <Box flex={1} display="flex" flexDirection="column" justifyContent="center" alignItems="center" borderRight="1px solid black">
-                <Typography component="h1" variant="h4" gutterBottom>
-                    Calendario
+            <Box
+                flex={1}
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                borderRight="1px solid #ddd"
+                padding={3}
+            >
+                <Typography component="h1" variant="h4" gutterBottom sx={{ marginBottom: 2 }}>
+                    Calendario de Audiencias
                 </Typography>
 
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateCalendar
-                        value={selectedDate}
-                        onChange={(newValue) => setSelectedDate(newValue)}
-                        slots={{
-                            day: (props) => {
-                                const { day, selected, ...other } = props;
+                {loading ? (
+                    <CircularProgress />
+                ) : error ? (
+                    <Alert severity="error">{error}</Alert>
+                ) : (
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DateCalendar
+                            value={selectedDate}
+                            onChange={(newValue) => setSelectedDate(newValue)}
+                            sx={{ backgroundColor: 'white', width: '100%', borderRadius: '4px', color: 'black' }}
+                            slots={{
+                                day: (props) => {
+                                    const { day, selected, ...other } = props;
 
-                             
-                                const audiencia = audiencias.find((a) => {
-                                    const audienciaDate = dayjs(a.fecha, "DD/MM/YYYY");
+                                    const audiencia = audiencias.find((a) => {
+                                        const audienciaDate = dayjs(a.fecha, "DD/MM/YYYY");
+                                        return audienciaDate.isSame(day, 'day');
+                                    });
+
                                     return (
-                                        audienciaDate.isSame(day, 'day') 
-                                     
+                                        <PickersDay
+                                            {...props}
+                                            {...other}
+                                            selected={selected}
+                                            sx={{
+                                                backgroundColor: audiencia ? '#e57373' : selected ? '#1976d2' : 'transparent',
+                                                color: audiencia ? 'black' : selected ? 'white' : 'black',
+                                                borderRadius: '50%',
+                                                fontWeight: audiencia ? 'bold' : 'normal',
+                                                "&:hover": {
+                                                    backgroundColor: audiencia ? "#d32f2f" : selected ? '#1565c0' : "rgba(0,0,0,0.1)",
+                                                },
+                                            }}
+                                        />
                                     );
-                                });
-
-                                return (
-                                    <PickersDay
-                                        {...props}
-                                        {...other}
-                                        sx={{
-                                            backgroundColor: audiencia ? 'red' : 'transparent',
-                                            color: audiencia ? 'white' : 'black',
-                                            borderRadius: '50%',
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            cursor: 'pointer',
-                                            fontWeight: audiencia ? 'bold' : 'normal',
-                                            "&:hover": {
-                                                backgroundColor: audiencia ? "#d32f2f" : "rgba(0,0,0,0.1)",
-                                            },
-                                        }}
-                                        selected={selected}
-                                    />
-                                );
-                            }
-                        }}
-                    />
-                </LocalizationProvider>
+                                }
+                            }}
+                        />
+                    </LocalizationProvider>
+                )}
             </Box>
-
             {/* 📋 Panel derecho con información */}
-            <Box flex={1} display="flex" justifyContent="center" alignItems="center">
-                <Typography variant="h6">
+            <Box flex={1} display="flex" flexDirection="column" padding={3}>
+                <Typography component="h1" variant="h4" gutterBottom sx={{ marginBottom: 2, textAlign: 'center' }}>
                     {selectedDate
-                        ? `Reuniones programadas para el ${selectedDate.date()}/${selectedDate.month() + 1}/${selectedDate.year()}`
-                        : 'Selecciona una fecha'}
+                        ? `Reuniones para el ${selectedDate.format("DD/MM/YYYY")}`
+                        : 'Selecciona una fecha para ver reuniones'}
                 </Typography>
+
+                {selectedDate && (
+                    <Box sx={{ width: "100%", maxHeight: "70vh", overflowY: "auto", marginTop: 2 }}>
+                        {audiencias
+                            .filter((a) => dayjs(a.fecha, "DD/MM/YYYY").isSame(selectedDate, 'day'))
+                            .map((a) => (
+                                <Box
+                                    key={a.idAudiencia}
+                                    sx={{
+                                        border: "1px solid #ddd",
+                                        padding: 2,
+                                        marginBottom: 2,
+                                        borderRadius: "4px",
+                                        backgroundColor: "#000815",
+                                    }}
+                                >
+                                    <Typography variant="body1" fontWeight="bold">{a.asunto}</Typography>
+                                    <Typography variant="body2">📌 {a.nombreEmpresa}</Typography>
+                                    <Typography variant="body2">👤 Atendido por: {a.atendidoPor}</Typography>
+                                    <Typography variant="body2">📂 Estado: {a.estado}</Typography>
+                                    <Typography variant="body2">📩 Derivado a: {a.derivadoA}</Typography>
+                                </Box>
+                            ))}
+                    </Box>
+                )}
             </Box>
         </Box>
     );
