@@ -29,7 +29,7 @@ const Estadistic: React.FC = () => {
       icon: <WorkHistoryIcon color="primary" />,
       title: "Historial de audiencias",
       description: "Consultá tus audiencias",
-      path: "/misaudiencias"
+      path: "/audienciadetalle"
     },
     {
       icon: <SupportAgentIcon color="primary" />,
