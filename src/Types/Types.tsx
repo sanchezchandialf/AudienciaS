@@ -1,5 +1,6 @@
 
  export default interface Audiencia {
+    map(arg0: (item: any) => any[]): import("jspdf-autotable").RowInput[] | undefined;
     idAudiencia: number;
     correoElectronico: string;
     fecha: string;
@@ -9,7 +10,7 @@
     idClasificacion: number;
     idEstado:number ,
     estado: string;
-    atendidoPor: number;
+    atendidoPor: string;
     derivadoA: string;
     asunto: string;
   }
