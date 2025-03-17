@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, FC } from "react";
 import { Checkbox, FormControlLabel, CircularProgress, Typography, Box, Paper, Divider, Button } from "@mui/material";
 import Audiencia from "../../../Types/Types";
 import { FetchApi } from "../../../api/useAxios";
@@ -9,7 +9,7 @@ import ModalList from "../../../shared/utilities/modal";
 import { useNavigate } from "react-router-dom";
 
 
-const ListaPersonalizada: React.FC = () => {
+const ListaPersonalizada: FC = () => {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -91,8 +91,14 @@ const ListaPersonalizada: React.FC = () => {
         }
     };
 
+    const handleEdit = () => {
+        if (selectedRows.length > 0) {
+            const selectedData = audiencias.filter(audiencia => selectedRows.includes(audiencia.idAudiencia));
+            navigate("/edit", { state: { audienciasSeleccionadas: selectedData } });
+        }
+    };
    
-
+    //manejo de las paginas 
     const handlePageChange = (newPage: number) => {
         setPaginationModel((prevModel) => ({ ...prevModel, page: newPage }));
     };
@@ -185,7 +191,8 @@ const ListaPersonalizada: React.FC = () => {
             <Box display={"flex"} justifyContent={"flex-end"} marginTop={2}>
                 <Button variant="contained" color="primary" onClick={handleExportToPDF}>Generar PDF</Button>
                 <Button variant="contained" color="secondary" onClick={handleExportToExcel} style={{ marginLeft: '16px' }}>Exportar a Excel</Button>
-                
+                <Button variant="contained" color="primary" onClick={handleEdit}>Editar</Button>
+
             </Box>
             <ModalList open={openModal} handleClose={handleCloseModal} />
         </Box>
