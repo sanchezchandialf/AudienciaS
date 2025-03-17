@@ -1,4 +1,4 @@
-import { UserProfile, UserProfileToken } from '../models/user';
+import { UserProfile } from '../models/user';
 import React, { createContext, FC, PropsWithChildren, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/AuthService';

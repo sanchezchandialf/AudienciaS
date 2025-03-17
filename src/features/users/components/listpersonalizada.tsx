@@ -6,7 +6,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import generarPDF from "../../../shared/utilities/generadorpdf";
 import ExportCSV from "../../../shared/utilities/ExportCSV";
 import ModalList from "../../../shared/utilities/modal";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { BrowserRoutes } from "../../../router/BrowserRoutes";
 
 const ListaPersonalizada: React.FC = () => {
@@ -18,7 +18,7 @@ const ListaPersonalizada: React.FC = () => {
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [openModal, setOpenModal] = useState(false);
 
-    const handleOpenModal = () => setOpenModal(true);
+   
     const handleCloseModal = () => setOpenModal(false);
 
     const navigate = useNavigate();
