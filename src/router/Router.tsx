@@ -6,11 +6,9 @@ import Estadistic from "../features/users/estadistic";
 import Layout from "../shared/components/layouts";
 import AuthorizedComponent from "./AuthenticateRoute";
 import Form from "../features/form/form";
-import AudienciasList from "../features/users/components/AudienciasList";
 import { UserProvider } from "../context/useAuth.tsx"; // Importa aquí
-import EditView from "../features/users/components/editview.tsx";
 import Calendario from "../features/calendar/calendar.tsx";
-import ListaPersonalizada from "../features/users/components/listpersonalizada.tsx";
+import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
 
 const Router = createBrowserRouter([
   {
@@ -49,22 +47,8 @@ const Router = createBrowserRouter([
           </AuthorizedComponent>
         ),
       },
-      {
-        path: BrowserRoutes.MISAUDIENCIAS,
-        element: (
-          <AuthorizedComponent>
-            <AudienciasList />
-          </AuthorizedComponent>
-        ),
-      },
-      {
-        path: BrowserRoutes.EDITAR_AUDICENCIA,
-        element: (
-          <AuthorizedComponent>
-            <EditView />
-          </AuthorizedComponent>
-        ),
-      },
+      
+      
       {
         path:BrowserRoutes.CALENDARIO,
         element:(

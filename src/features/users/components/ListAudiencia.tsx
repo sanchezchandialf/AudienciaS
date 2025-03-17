@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Checkbox, FormControlLabel, CircularProgress, Typography, Box, Paper, Divider, Button } from "@mui/material";
 import Audiencia from "../../../Types/Types";
 import { FetchApi } from "../../../api/useAxios";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridPaginationModel } from "@mui/x-data-grid";
 import generarPDF from "../../../shared/utilities/generadorpdf";
 import ExportCSV from "../../../shared/utilities/ExportCSV";
 import ModalList from "../../../shared/utilities/modal";
-import {  useNavigate } from "react-router-dom";
-import { BrowserRoutes } from "../../../router/BrowserRoutes";
+import { useNavigate } from "react-router-dom";
+
 
 const ListaPersonalizada: React.FC = () => {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -17,8 +17,8 @@ const ListaPersonalizada: React.FC = () => {
     const [filteredAudiencias, setFilteredAudiencias] = useState<Audiencia[]>([]);
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [openModal, setOpenModal] = useState(false);
+    const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({ pageSize: 10, page: 0 });
 
-   
     const handleCloseModal = () => setOpenModal(false);
 
     const navigate = useNavigate();
@@ -91,10 +91,15 @@ const ListaPersonalizada: React.FC = () => {
         }
     };
 
-    const handleEdit = () => {
-        navigate(BrowserRoutes.EDITAR_AUDICENCIA.replace(":id", selectedRows[0].toString()));
+   
+
+    const handlePageChange = (newPage: number) => {
+        setPaginationModel((prevModel) => ({ ...prevModel, page: newPage }));
     };
-        
+
+    const handlePageSizeChange = (newPageSize: number) => {
+        setPaginationModel((prevModel) => ({ ...prevModel, pageSize: newPageSize }));
+    };
 
     const columns: GridColDef[] = [
         { field: 'idAudiencia', headerName: 'ID', width: 90 },
@@ -164,18 +169,23 @@ const ListaPersonalizada: React.FC = () => {
                 <DataGrid
                     rows={filteredAudiencias}
                     columns={columns}
-                    paginationModel={{ pageSize: 10, page: 0 }}
-                    pageSizeOptions={[10]}
+                    paginationModel={paginationModel}
+                    pageSizeOptions={[10, 20, 50]}
+                    pagination
                     checkboxSelection
                     disableRowSelectionOnClick
                     getRowId={(row) => row.idAudiencia}
                     onRowSelectionModelChange={(selection) => setSelectedRows(selection as number[])}
+                    onPaginationModelChange={(model) => {
+                        handlePageChange(model.page);
+                        handlePageSizeChange(model.pageSize);
+                    }}
                 />
             </Paper>
             <Box display={"flex"} justifyContent={"flex-end"} marginTop={2}>
                 <Button variant="contained" color="primary" onClick={handleExportToPDF}>Generar PDF</Button>
                 <Button variant="contained" color="secondary" onClick={handleExportToExcel} style={{ marginLeft: '16px' }}>Exportar a Excel</Button>
-                <Button variant="contained" color="primary" onClick={()=>handleEdit()} style={{ marginLeft: '16px' }}>Editar</Button>
+                
             </Box>
             <ModalList open={openModal} handleClose={handleCloseModal} />
         </Box>
