@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import {UserProfileToken } from '../models/user';
-const api="https://localhost:7255/api";
+const api="https://webapiaudiencia.azurewebsites.net/api";
 
 type LoginRequestBody = {
     Correo: string;

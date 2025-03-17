@@ -1,5 +1,5 @@
 import axios from "axios"
-const API_URL="https://localhost:7255/api";
+const API_URL="https://webapiaudiencia.azurewebsites.net/api";
 
 export default axios.create({
 

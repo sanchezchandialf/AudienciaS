@@ -20,3 +20,4 @@ const Search = ({ onSearch }: { onSearch: (query: string) => void }) => {
 };
 
 export default Search;
+

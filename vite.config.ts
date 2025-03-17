@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://localhost:7255",
+        target: "https://webapiaudiencia.azurewebsites.net",
         changeOrigin: true,
         secure: false,
       },
