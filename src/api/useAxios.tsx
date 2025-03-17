@@ -1,4 +1,4 @@
-const API_URL: Readonly<string> ="https://localhost:7255/api";
+const API_URL: Readonly<string> ="https://webapiaudiencia.azurewebsites.net/api";
 
 interface FetchApiParams {
   path: string;
