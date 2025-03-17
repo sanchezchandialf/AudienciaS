@@ -77,6 +77,8 @@ export default function Form() {
       const response = await FetchApi<Audiencia>({
         path: "/Form",
         method: "POST",
+        requiresAuth: true,
+        token: token || "",
 
         payload: formattedData,
 

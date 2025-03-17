@@ -7,7 +7,7 @@ import Search from "../../../shared/components/filter";
 import EditIcon from '@mui/icons-material/Edit';
 import PageviewIcon from '@mui/icons-material/Pageview';
 import ViewAudiencias from "./viewAudiencias";
-import generarPDF from "./generadorpdf";
+import generarPDF from "../../../shared/utilities/generadorpdf";
 import { useNavigate } from "react-router-dom";
 import { BrowserRoutes } from "../../../router/BrowserRoutes";
 

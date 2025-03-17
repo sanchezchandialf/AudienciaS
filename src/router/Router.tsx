@@ -31,7 +31,10 @@ const Router = createBrowserRouter([
 
       {
         path: BrowserRoutes.HOME,
-        element: <Home />,
+        element:
+        <AuthorizedComponent>
+         <Home />,
+        </AuthorizedComponent>
       },
 
       {

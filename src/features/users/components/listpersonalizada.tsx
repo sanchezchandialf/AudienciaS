@@ -3,8 +3,11 @@ import { Checkbox, FormControlLabel, CircularProgress, Typography, Box, Paper, D
 import Audiencia from "../../../Types/Types";
 import { FetchApi } from "../../../api/useAxios";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { number } from "yup";
-import generarPDF from "./generadorpdf";
+import generarPDF from "../../../shared/utilities/generadorpdf";
+import ExportCSV from "../../../shared/utilities/ExportCSV";
+import ModalList from "../../../shared/utilities/modal";
+import { Navigate, useNavigate } from "react-router-dom";
+import { BrowserRoutes } from "../../../router/BrowserRoutes";
 
 const ListaPersonalizada: React.FC = () => {
     const [selectedItems, setSelectedItems] = useState<string[]>([]);
@@ -13,7 +16,12 @@ const ListaPersonalizada: React.FC = () => {
     const [audiencias, setAudiencias] = useState<Audiencia[]>([]);
     const [filteredAudiencias, setFilteredAudiencias] = useState<Audiencia[]>([]);
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
+    const [openModal, setOpenModal] = useState(false);
 
+    const handleOpenModal = () => setOpenModal(true);
+    const handleCloseModal = () => setOpenModal(false);
+
+    const navigate = useNavigate();
     useEffect(() => {
         const fetchAudiencias = async () => {
             setLoading(true);
@@ -57,26 +65,36 @@ const ListaPersonalizada: React.FC = () => {
             setFilteredAudiencias(audiencias);
         } else {
             const filtered = audiencias.filter(audiencia =>
-                filters.includes(audiencia.estado) || filters.includes(audiencia.atendidoPor) // Agregamos atendidoPor al filtro
+                filters.includes(audiencia.estado) || filters.includes(audiencia.atendidoPor)
             );
             setFilteredAudiencias(filtered);
         }
     };
 
-
     const handleExportToPDF = () => {
         const asunto = "Lista de Audiencias";
-    
+
         if (selectedRows.length > 0) {
-            // Filtrar solo las audiencias seleccionadas
             const selectedData = audiencias.filter(audiencia => selectedRows.includes(audiencia.idAudiencia));
             generarPDF(selectedData, asunto, [0, 5]);
         } else {
-            // Si no hay selección, exportar toda la lista
             generarPDF(audiencias, asunto, [0, 5]);
         }
     };
-    
+
+    const handleExportToExcel = () => {
+        if (selectedRows.length > 0) {
+            const selectedData = audiencias.filter(audiencia => selectedRows.includes(audiencia.idAudiencia));
+            ExportCSV(selectedData, "lista audiencias");
+        } else {
+            ExportCSV(audiencias, "lista audiencias");
+        }
+    };
+
+    const handleEdit = () => {
+        navigate(BrowserRoutes.EDITAR_AUDICENCIA.replace(":id", selectedRows[0].toString()));
+    };
+        
 
     const columns: GridColDef[] = [
         { field: 'idAudiencia', headerName: 'ID', width: 90 },
@@ -151,15 +169,15 @@ const ListaPersonalizada: React.FC = () => {
                     checkboxSelection
                     disableRowSelectionOnClick
                     getRowId={(row) => row.idAudiencia}
-                    onRowSelectionModelChange={(selection) => setSelectedRows(selection as number[])} 
+                    onRowSelectionModelChange={(selection) => setSelectedRows(selection as number[])}
                 />
-
             </Paper>
             <Box display={"flex"} justifyContent={"flex-end"} marginTop={2}>
-            <Button variant="contained" color="primary" onClick={handleExportToPDF}>Generar PDF</Button>
-            <Button variant="contained" color="secondary" style={{ marginLeft: '16px' }}>Exportar a Excel</Button>
+                <Button variant="contained" color="primary" onClick={handleExportToPDF}>Generar PDF</Button>
+                <Button variant="contained" color="secondary" onClick={handleExportToExcel} style={{ marginLeft: '16px' }}>Exportar a Excel</Button>
+                <Button variant="contained" color="primary" onClick={()=>handleEdit()} style={{ marginLeft: '16px' }}>Editar</Button>
             </Box>
-            
+            <ModalList open={openModal} handleClose={handleCloseModal} />
         </Box>
     );
 };
