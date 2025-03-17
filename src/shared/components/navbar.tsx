@@ -5,10 +5,9 @@ import {
   Drawer,
   IconButton,
   Toolbar,
-  Typography,
 } from "@mui/material";
 import NavListDrawer from "./NavListDrawer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { NavLink, useNavigate } from "react-router-dom";
 import logoedit from "../../assets/logoedit.png";

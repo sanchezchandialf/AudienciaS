@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, BrowserRouter } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { FetchApi } from "../../../api/useAxios";
 import Audiencia, { Cargo, Clasificaciones, Estado } from "../../../Types/Types";
 import Empleados from "../../../Types/Types";

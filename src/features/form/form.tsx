@@ -6,7 +6,6 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
   CircularProgress,
   Snackbar,
   Alert,
@@ -14,16 +13,16 @@ import {
 
 import { Controller, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { FetchApi } from "../../api/useAxios";
 import Empleados, { Cargo, Clasificaciones, Estado } from "../../Types/Types";
-import { data } from "react-router-dom";
+
 import Audiencia from "../../Types/Types";
 
 export default function Form() {
   const { control, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<Audiencia>();
   const [empleados, setEmpleados] = useState<Empleados[]>([]);
-  const [audiencias, setAudiencias] = useState<Audiencia[]>([]);
+
   const [cargo, setCargo] = useState<Cargo[]>([]);
   const [clasificaciones, setClasificaciones] = useState<Clasificaciones[]>([]);
   const [estado, setEstado] = useState<Estado[]>([]);

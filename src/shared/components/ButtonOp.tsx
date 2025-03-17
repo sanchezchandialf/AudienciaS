@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
-import { display } from "@mui/system";
+
 import React from "react"
-import { string } from "yup";
+
 
 type BotonOpciones={
     titulo:string,

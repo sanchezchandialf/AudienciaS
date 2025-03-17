@@ -1,9 +1,8 @@
 import React from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+
 import Audiencia from '../../../Types/Types';
-import { object } from 'yup';
+
 import generarPDF from './informeindividual';
 
 interface ViewAudienciasProps {
@@ -56,6 +55,7 @@ const ViewAudiencias: React.FC<ViewAudienciasProps> = ({ audiencia, open, onClos
                     <Button variant="contained" color="secondary" onClick={() => generarPDF({ audiencia })}>
                         Generar Reporte
                     </Button>
+                  
                 </Box>
             </Box>
         </Modal>

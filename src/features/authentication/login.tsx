@@ -1,4 +1,4 @@
-import React from 'react';
+
 import * as yup from 'yup';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,7 +6,7 @@ import { useAuth } from '../../context/useAuth';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import toast from 'react-hot-toast';
 import { FC } from 'react';
-import { Navigate } from 'react-router-dom';
+
 
 type FormValues = {
   email: string;
