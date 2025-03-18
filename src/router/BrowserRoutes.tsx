@@ -5,9 +5,10 @@ export enum BrowserRoutes {
     AUDIENCIAS = '/audiencias',
     ESTADISTICAS = '/estadisticas',
     MISAUDIENCIAS='/misaudiencias',
-    EDITAR_AUDICENCIA='/editaraudiencia/:id',
     CALENDARIO='/calendario',
-    AUDIENCIA_DETALLE='/audienciadetalle'
+    AUDIENCIA_DETALLE='/audienciadetalle',
+    EDITAR='/edit'
+    
   }
   
   

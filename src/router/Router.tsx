@@ -9,6 +9,7 @@ import Form from "../features/form/form";
 import { UserProvider } from "../context/useAuth.tsx"; // Importa aquí
 import Calendario from "../features/calendar/calendar.tsx";
 import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
+import Edit from "../features/users/components/EditList.tsx";
 
 const Router = createBrowserRouter([
   {
@@ -64,6 +65,15 @@ const Router = createBrowserRouter([
             <ListaPersonalizada/>
           </AuthorizedComponent>
         ),
+      },
+      {
+        path: BrowserRoutes.EDITAR,
+        element:(
+          <AuthorizedComponent>
+            <Edit/>
+          </AuthorizedComponent>
+        )
+        
       }
     ],
   },
