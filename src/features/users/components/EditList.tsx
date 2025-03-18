@@ -4,7 +4,7 @@ import Audiencia, { Cargo, Clasificaciones, Estado  } from "../../../Types/Types
 import Empleados from  "../../../Types/Types";
 import { Box, Typography, TextField, Button, MenuItem, FormControl, InputLabel, Select,  Snackbar, Alert } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const EditList = () => {
   const location = useLocation();
