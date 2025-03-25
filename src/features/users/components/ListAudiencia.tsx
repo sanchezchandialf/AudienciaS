@@ -97,7 +97,35 @@ const ListaPersonalizada: FC = () => {
             navigate("/edit", { state: { audienciasSeleccionadas: selectedData } });
         }
     };
-   
+    const handleDelete = async () => {
+        if (selectedRows.length === 0) {
+            alert("Seleccione al menos una audiencia para eliminar.");
+            return;
+        }
+    
+        const token = localStorage.getItem("token");
+    
+        for (const id of selectedRows) {
+            try {
+                const response = await FetchApi({
+                    path: `/Form/${id}`,
+                    method: "DELETE",
+                    requiresAuth: true,
+                    token: token || "",
+                });
+    
+                if (response.code === 204) {
+                    setAudiencias((prev) => prev.filter(audiencia => audiencia.idAudiencia !== id));
+                    setFilteredAudiencias((prev) => prev.filter(audiencia => audiencia.idAudiencia !== id));
+                } else {
+                    console.error(`Error al eliminar la audiencia con ID ${id}: ${response.message}`);
+                }
+            } catch (error) {
+                console.error("Error en la solicitud de eliminación:", error);
+            }
+        }
+    };
+    
     //manejo de las paginas 
     const handlePageChange = (newPage: number) => {
         setPaginationModel((prevModel) => ({ ...prevModel, page: newPage }));
@@ -191,8 +219,8 @@ const ListaPersonalizada: FC = () => {
             <Box display={"flex"} justifyContent={"flex-end"} marginTop={2}>
                 <Button variant="contained" color="primary" onClick={handleExportToPDF}>Generar PDF</Button>
                 <Button variant="contained" color="secondary" onClick={handleExportToExcel} style={{ marginLeft: '16px' }}>Exportar a Excel</Button>
-                <Button variant="contained" color="primary" onClick={handleEdit}>Editar</Button>
-
+                <Button variant="contained" color="primary" onClick={handleEdit}>Editar</Button> 
+                <Button variant="contained" color="secondary" onClick={handleDelete} style={{ marginLeft: '16px' }}>Eliminar</Button>    
             </Box>
             <ModalList open={openModal} handleClose={handleCloseModal} />
         </Box>
