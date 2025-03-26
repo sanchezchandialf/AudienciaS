@@ -219,7 +219,7 @@ const ListaPersonalizada: FC = () => {
             <Box display={"flex"} justifyContent={"flex-end"} marginTop={2}>
                 <Button variant="contained" color="primary" onClick={handleExportToPDF}>Generar PDF</Button>
                 <Button variant="contained" color="secondary" onClick={handleExportToExcel} style={{ marginLeft: '16px' }}>Exportar a Excel</Button>
-                <Button variant="contained" color="primary" onClick={handleEdit}>Editar</Button> 
+                <Button variant="contained" color="primary" onClick={handleEdit} style={{marginLeft:'16px'}}>Editar</Button> 
                 <Button variant="contained" color="secondary" onClick={handleDelete} style={{ marginLeft: '16px' }}>Eliminar</Button>    
             </Box>
             <ModalList open={openModal} handleClose={handleCloseModal} />
