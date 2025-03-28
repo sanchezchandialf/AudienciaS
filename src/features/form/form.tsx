@@ -16,53 +16,51 @@ import { useEffect, useState } from "react";
 
 import { FetchApi } from "../../api/useAxios";
 import Empleados, { Cargo, Clasificaciones, Estado } from "../../Types/Types";
-
 import Audiencia from "../../Types/Types";
 
 export default function Form() {
+  // React Hook Form setup
   const { control, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm<Audiencia>();
-  const [empleados, setEmpleados] = useState<Empleados[]>([]);
 
+  // State variables
+  const [empleados, setEmpleados] = useState<Empleados[]>([]);
   const [cargo, setCargo] = useState<Cargo[]>([]);
   const [clasificaciones, setClasificaciones] = useState<Clasificaciones[]>([]);
   const [estado, setEstado] = useState<Estado[]>([]);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
+
+  // Fetch data on component mount
   useEffect(() => {
-
     if (!token) return;
-    // Maneja la carga de los empleados en el form 
-    const fetchData = async () => {
 
+    const fetchData = async () => {
       try {
         const [empleadoRes, cargoRes, clasificacionesRes, estadoRes] = await Promise.all([
           FetchApi<Empleados[]>({ path: "/Empleado", method: "GET" }),
           FetchApi<Cargo[]>({ path: "/Cargo", method: "GET" }),
           FetchApi<Clasificaciones[]>({ path: "/Clasificaciones", method: "GET" }),
-          FetchApi<Estado[]>({ path: "/Estado", method: "GET" })
-
+          FetchApi<Estado[]>({ path: "/Estado", method: "GET" }),
         ]);
 
-        console.log(clasificacionesRes.data)
         if (empleadoRes.code === 200 && empleadoRes.data) setEmpleados(empleadoRes.data);
         if (cargoRes.code === 200 && cargoRes.data) setCargo(cargoRes.data);
         if (clasificacionesRes.code === 200 && clasificacionesRes.data) setClasificaciones(clasificacionesRes.data);
         if (estadoRes.code === 200 && estadoRes.data) setEstado(estadoRes.data);
       } catch (error) {
-        console.error("error al obtener datos ", error)
+        console.error("Error al obtener datos", error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [token]);
 
-  const handleSnackbarClose = () => {
+  // Handle Snackbar close
+  const handleSnackbarClose = () => setSnackbarOpen(false);
 
-    setSnackbarOpen(false);
-  };
-
+  // Form submission handler
   const onSubmit = async (data: Audiencia) => {
-
     const formattedData = {
       ...data,
       fecha: new Date(data.fecha).toISOString(),
@@ -70,30 +68,27 @@ export default function Form() {
       idClasificacion: Number(data.idClasificacion),
       atendidoPor: Number(data.atendidoPor),
     };
-    console.log("Datos enviados al back", formattedData)
+
     try {
-      console.log("formulario enviado", data);
       const response = await FetchApi<Audiencia>({
         path: "/Form",
         method: "POST",
         requiresAuth: true,
         token: token || "",
-
         payload: formattedData,
-
-
       });
+
       if ((response.code === 200 || response.code === 201) && response.data) {
         setSnackbarOpen(true);
-        console.log("enviado correctamente", response.data)
         reset();
       } else {
-        console.error("error al enviar el formulario", response)
+        console.error("Error al enviar el formulario", response);
       }
     } catch (error) {
-
+      console.error("Error en el envío del formulario", error);
     }
-  }
+  };
+
   return (
     <Box
       component="form"
@@ -106,6 +101,7 @@ export default function Form() {
         borderRadius: 2,
       }}
     >
+      {/* Input fields */}
       <Controller
         name="correoElectronico"
         control={control}
@@ -120,6 +116,7 @@ export default function Form() {
           />
         )}
       />
+
       <Controller
         name="fecha"
         control={control}
@@ -136,6 +133,7 @@ export default function Form() {
           />
         )}
       />
+
       <Controller
         name="dni"
         control={control}
@@ -156,6 +154,7 @@ export default function Form() {
           />
         )}
       />
+
       <Controller
         name="nombreEmpresa"
         control={control}
@@ -170,6 +169,7 @@ export default function Form() {
           />
         )}
       />
+
       <Controller
         name="derivadoA"
         control={control}
@@ -184,6 +184,7 @@ export default function Form() {
           />
         )}
       />
+
       <Controller
         name="asunto"
         control={control}
@@ -201,6 +202,7 @@ export default function Form() {
         )}
       />
 
+      {/* Dropdowns */}
       <Controller
         name="atendidoPor"
         control={control}
@@ -211,13 +213,14 @@ export default function Form() {
             <Select {...field} label="Empleado">
               {empleados.map((empleado) => (
                 <MenuItem key={empleado.idEmpleado} value={empleado.idEmpleado}>
-                  {empleado.nombre} {/* Ajusta según los datos de tu API */}
+                  {empleado.nombre}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         )}
       />
+
       <Controller
         name="idCargo"
         control={control}
@@ -228,13 +231,14 @@ export default function Form() {
             <Select {...field} label="Cargo">
               {cargo.map((cargos) => (
                 <MenuItem key={cargos.idCargo} value={cargos.idCargo}>
-                  {cargos.nombreCargo} {/* Ajusta según los datos de tu API */}
+                  {cargos.nombreCargo}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         )}
       />
+
       <Controller
         name="idClasificacion"
         control={control}
@@ -245,13 +249,14 @@ export default function Form() {
             <Select {...field} label="Clasificaciones">
               {clasificaciones.map((clasificacion) => (
                 <MenuItem key={clasificacion.idclasificacion} value={clasificacion.idclasificacion}>
-                  {clasificacion.clasificacion} {/* Ajusta según los datos de tu API */}
+                  {clasificacion.clasificacion}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         )}
       />
+
       <Controller
         name="idEstado"
         control={control}
@@ -262,7 +267,7 @@ export default function Form() {
             <Select {...field} label="Estado">
               {estado.map((est) => (
                 <MenuItem key={est.idestado} value={est.idestado}>
-                  {est.nombre} {/* Ajusta según los datos de tu API */}
+                  {est.nombre}
                 </MenuItem>
               ))}
             </Select>
@@ -270,12 +275,18 @@ export default function Form() {
         )}
       />
 
-      {/* Botón de envío */}
-      <Button type="submit" variant="contained" size="large" sx={{ width: "100%", backgroundColor: "#5059bc", mt: 2 }} disabled={isSubmitting}>
+      {/* Submit button */}
+      <Button
+        type="submit"
+        variant="contained"
+        size="large"
+        sx={{ width: "100%", backgroundColor: "#5059bc", mt: 2 }}
+        disabled={isSubmitting}
+      >
         {isSubmitting ? <CircularProgress size={24} /> : "Enviar Solicitud"}
       </Button>
 
-      {/* Mensajes de éxito y error */}
+      {/* Success and error messages */}
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <Alert severity="success">Formulario enviado correctamente</Alert>
       </Snackbar>
