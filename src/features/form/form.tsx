@@ -95,187 +95,214 @@ export default function Form() {
       onSubmit={handleSubmit(onSubmit)}
       sx={{
         p: 4,
-        maxWidth: 500,
+        maxWidth: 900,
         margin: "64px auto",
         backgroundColor: "#00203a",
         borderRadius: 2,
+        display: "flex",
+        flexDirection: "column",
+        gap: 4,
       }}
     >
-      {/* Input fields */}
-      <Controller
-        name="correoElectronico"
-        control={control}
-        rules={{ required: "Email es requerido", pattern: /^\S+@\S+$/i }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Correo electrónico"
-            fullWidth
-            error={!!errors.correoElectronico}
-            helperText={errors.correoElectronico?.message?.toString()}
+      {/* Primer grupo de campos */}
+      <Box display="flex" gap={2} flexWrap="wrap">
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="correoElectronico"
+            control={control}
+            rules={{ required: "Email es requerido", pattern: /^\S+@\S+$/i }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Correo electrónico"
+                fullWidth
+                error={!!errors.correoElectronico}
+                helperText={errors.correoElectronico?.message?.toString()}
+              />
+            )}
           />
-        )}
-      />
-
-      <Controller
-        name="fecha"
-        control={control}
-        rules={{ required: "Fecha es requerida" }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Fecha"
-            type="date"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            error={!!errors.fecha}
-            helperText={errors.fecha?.message?.toString()}
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="fecha"
+            control={control}
+            rules={{ required: "Fecha es requerida" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Fecha"
+                type="date"
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+                error={!!errors.fecha}
+                helperText={errors.fecha?.message?.toString()}
+              />
+            )}
           />
-        )}
-      />
-
-      <Controller
-        name="dni"
-        control={control}
-        rules={{
-          required: "DNI es requerido",
-          pattern: {
-            value: /^[0-9]{8,10}$/,
-            message: "DNI inválido",
-          },
-        }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="DNI"
-            fullWidth
-            error={!!errors.dni}
-            helperText={errors.dni?.message?.toString()}
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="dni"
+            control={control}
+            rules={{
+              required: "DNI es requerido",
+              pattern: {
+                value: /^[0-9]{8,10}$/,
+                message: "DNI inválido",
+              },
+            }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="DNI"
+                fullWidth
+                error={!!errors.dni}
+                helperText={errors.dni?.message?.toString()}
+              />
+            )}
           />
-        )}
-      />
-
-      <Controller
-        name="nombreEmpresa"
-        control={control}
-        rules={{ required: "Nombre de empresa es requerido" }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Nombre de la empresa"
-            fullWidth
-            error={!!errors.nombreEmpresa}
-            helperText={errors.nombreEmpresa?.message?.toString()}
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="nombreEmpresa"
+            control={control}
+            rules={{ required: "Nombre de empresa es requerido" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Nombre de la empresa"
+                fullWidth
+                error={!!errors.nombreEmpresa}
+                helperText={errors.nombreEmpresa?.message?.toString()}
+              />
+            )}
           />
-        )}
-      />
-
-      <Controller
-        name="derivadoA"
-        control={control}
-        rules={{ required: "Complete este campo" }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Derivado a"
-            fullWidth
-            error={!!errors.derivadoA}
-            helperText={errors.derivadoA?.message?.toString()}
+        </Box>
+      </Box>
+  
+      {/* Segundo grupo de campos */}
+      <Box display="flex" gap={2} flexWrap="wrap">
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="derivadoA"
+            control={control}
+            rules={{ required: "Complete este campo" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Derivado a"
+                fullWidth
+                error={!!errors.derivadoA}
+                helperText={errors.derivadoA?.message?.toString()}
+              />
+            )}
           />
-        )}
-      />
-
-      <Controller
-        name="asunto"
-        control={control}
-        rules={{ required: "Asunto es requerido" }}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Asunto"
-            fullWidth
-            multiline
-            rows={4}
-            error={!!errors.asunto}
-            helperText={errors.asunto?.message?.toString()}
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="asunto"
+            control={control}
+            rules={{ required: "Asunto es requerido" }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Asunto"
+                fullWidth
+                multiline
+                rows={4}
+                error={!!errors.asunto}
+                helperText={errors.asunto?.message?.toString()}
+              />
+            )}
           />
-        )}
-      />
-
-      {/* Dropdowns */}
-      <Controller
-        name="atendidoPor"
-        control={control}
-        rules={{ required: "Seleccione un empleado" }}
-        render={({ field }) => (
-          <FormControl fullWidth error={!!errors.atendidoPor} sx={{ mb: 2 }}>
-            <InputLabel>Empleado</InputLabel>
-            <Select {...field} label="Empleado">
-              {empleados.map((empleado) => (
-                <MenuItem key={empleado.idEmpleado} value={empleado.idEmpleado}>
-                  {empleado.nombre}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-      />
-
-      <Controller
-        name="idCargo"
-        control={control}
-        rules={{ required: "Seleccione un cargo" }}
-        render={({ field }) => (
-          <FormControl fullWidth error={!!errors.idCargo} sx={{ mb: 2 }}>
-            <InputLabel>Cargos</InputLabel>
-            <Select {...field} label="Cargo">
-              {cargo.map((cargos) => (
-                <MenuItem key={cargos.idCargo} value={cargos.idCargo}>
-                  {cargos.nombreCargo}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-      />
-
-      <Controller
-        name="idClasificacion"
-        control={control}
-        rules={{ required: "Seleccione una clasificacion" }}
-        render={({ field }) => (
-          <FormControl fullWidth error={!!errors.idClasificacion} sx={{ mb: 2 }}>
-            <InputLabel>Clasificaciones</InputLabel>
-            <Select {...field} label="Clasificaciones">
-              {clasificaciones.map((clasificacion) => (
-                <MenuItem key={clasificacion.idclasificacion} value={clasificacion.idclasificacion}>
-                  {clasificacion.clasificacion}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-      />
-
-      <Controller
-        name="idEstado"
-        control={control}
-        rules={{ required: "Seleccione un estado" }}
-        render={({ field }) => (
-          <FormControl fullWidth error={!!errors.idEstado} sx={{ mb: 2 }}>
-            <InputLabel>Estado</InputLabel>
-            <Select {...field} label="Estado">
-              {estado.map((est) => (
-                <MenuItem key={est.idestado} value={est.idestado}>
-                  {est.nombre}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-      />
-
-      {/* Submit button */}
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="atendidoPor"
+            control={control}
+            rules={{ required: "Seleccione un empleado" }}
+            render={({ field }) => (
+              <FormControl fullWidth error={!!errors.atendidoPor}>
+                <InputLabel>Empleado</InputLabel>
+                <Select {...field} label="Empleado">
+                  {empleados.map((empleado) => (
+                    <MenuItem key={empleado.idEmpleado} value={empleado.idEmpleado}>
+                      {empleado.nombre}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+          />
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="idCargo"
+            control={control}
+            rules={{ required: "Seleccione un cargo" }}
+            render={({ field }) => (
+              <FormControl fullWidth error={!!errors.idCargo}>
+                <InputLabel>Cargos</InputLabel>
+                <Select {...field} label="Cargo">
+                  {cargo.map((cargos) => (
+                    <MenuItem key={cargos.idCargo} value={cargos.idCargo}>
+                      {cargos.nombreCargo}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+          />
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="idClasificacion"
+            control={control}
+            rules={{ required: "Seleccione una clasificacion" }}
+            render={({ field }) => (
+              <FormControl fullWidth error={!!errors.idClasificacion}>
+                <InputLabel>Clasificaciones</InputLabel>
+                <Select {...field} label="Clasificaciones">
+                  {clasificaciones.map((clasificacion) => (
+                    <MenuItem key={clasificacion.idclasificacion} value={clasificacion.idclasificacion}>
+                      {clasificacion.clasificacion}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+          />
+        </Box>
+  
+        <Box flex={1} minWidth="300px">
+          <Controller
+            name="idEstado"
+            control={control}
+            rules={{ required: "Seleccione un estado" }}
+            render={({ field }) => (
+              <FormControl fullWidth error={!!errors.idEstado}>
+                <InputLabel>Estado</InputLabel>
+                <Select {...field} label="Estado">
+                  {estado.map((est) => (
+                    <MenuItem key={est.idestado} value={est.idestado}>
+                      {est.nombre}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+          />
+        </Box>
+      </Box>
+  
+      {/* Submit Button */}
       <Button
         type="submit"
         variant="contained"
@@ -285,12 +312,12 @@ export default function Form() {
       >
         {isSubmitting ? <CircularProgress size={24} /> : "Enviar Solicitud"}
       </Button>
-
+  
       {/* Success and error messages */}
       <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
         <Alert severity="success">Formulario enviado correctamente</Alert>
       </Snackbar>
-
+  
       {error && (
         <Snackbar open={!!error} autoHideDuration={6000} onClose={() => setError(null)}>
           <Alert severity="error">{error}</Alert>
