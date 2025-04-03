@@ -36,3 +36,4 @@
     idestado:number,
     nombre:string,
   }
+
