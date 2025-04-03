@@ -1,7 +1,6 @@
 import SchoolIcon from '@mui/icons-material/School';
 
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 
 
 import SettingsIcon from '@mui/icons-material/Settings';
