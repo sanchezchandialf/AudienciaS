@@ -21,12 +21,7 @@ const cardsData = [
       path: "/calendario"
     },
    
-    {
-      icon: <SupportAgentIcon color="primary" />,
-      title: "Mis Informes",
-      description: "Genera Reportes, diarios o mensuales sobre tus audiencias",
-      path: "/misaudiencias"
-    },
+   
     {
       icon: <SettingsIcon color="primary" />,
       title: "Mi usuario",

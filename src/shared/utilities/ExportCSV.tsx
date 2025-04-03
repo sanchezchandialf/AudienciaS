@@ -6,8 +6,10 @@ const ExportCSV = (lista: any[], asunto: string) => {
         return;
     }
 
-    const csv = Papa.unparse(lista);
-    const blob = new Blob([csv], { type: "text/csv" });
+    // Especificamos el delimitador adecuado
+    const csv = Papa.unparse(lista, { delimiter: ";" });
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
     link.download = `${asunto}.csv`;
