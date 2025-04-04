@@ -36,7 +36,7 @@ const UpdatePassword = () => {
 
     const response = await FetchApi({
       path: "/Usuario/editpass",
-      method: "POST",
+      method: "PUT",
       payload,
       requiresAuth: true,
       token: localStorage.getItem("token") || "",
