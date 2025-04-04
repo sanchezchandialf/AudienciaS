@@ -11,6 +11,7 @@ import Calendario from "../features/calendar/calendar.tsx";
 import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
 import Edit from "../features/users/components/EditList.tsx";
 import UpdatePassword from "../features/users/components/edit.tsx";
+import EditList from "../features/users/components/EditList.tsx";
 
 const Router = createBrowserRouter([
   {
@@ -71,7 +72,7 @@ const Router = createBrowserRouter([
         path: BrowserRoutes.EDITAR,
         element:(
           <AuthorizedComponent>
-            <Edit/>
+            <EditList/>
           </AuthorizedComponent>
         )
         
