@@ -11,7 +11,6 @@ import { FetchApi } from "../../../api/useAxios";
 
 
 interface PassDTO {
-  Correo: string;
   ClaveActual: string;
   ClaveNueva: string;
 }
@@ -29,7 +28,7 @@ const UpdatePassword = () => {
     setMensaje("");
 
     const payload: PassDTO = {
-      Correo: correo,
+     
       ClaveActual: claveActual,
       ClaveNueva: claveNueva,
     };
@@ -58,15 +57,7 @@ const UpdatePassword = () => {
           Actualizar Contraseña
         </Typography>
         <form onSubmit={handleSubmit}>
-          <TextField
-            label="Correo"
-            type="email"
-            value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
-            fullWidth
-            required
-            margin="normal"
-          />
+        
           <TextField
             label="Contraseña Actual"
             type="password"
