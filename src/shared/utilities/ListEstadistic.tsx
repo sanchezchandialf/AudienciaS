@@ -25,7 +25,7 @@ const cardsData = [
       icon: <SettingsIcon color="primary" />,
       title: "Mi usuario",
       description: "",
-      path: "/misaudiencias"
+      path: "/editpassword"
     },
   ];
 

@@ -7,8 +7,8 @@ export enum BrowserRoutes {
     MISAUDIENCIAS='/misaudiencias',
     CALENDARIO='/calendario',
     AUDIENCIA_DETALLE='/audienciadetalle',
-    EDITAR='/edit'
-    
+    EDITAR='/edit',
+    EDITPASWWORD='/editpassword',
   }
   
   
