@@ -9,9 +9,8 @@ import Form from "../features/form/form";
 import { UserProvider } from "../context/useAuth.tsx"; // Importa aquí
 import Calendario from "../features/calendar/calendar.tsx";
 import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
-
-import UpdatePassword from "../features/users/components/edit.tsx";
 import EditList from "../features/users/components/EditList.tsx";
+import UpdatePassword from "../features/users/components/edit.tsx";
 
 const Router = createBrowserRouter([
   {
