@@ -1,5 +1,4 @@
-import { useState } from "react";
-
+import { useState, useCallback } from "react";
 import {
   TextField,
   Button,
@@ -10,47 +9,45 @@ import {
 } from "@mui/material";
 import { FetchApi } from "../../../api/useAxios";
 
-
-
 interface PassDTO {
   ClaveActual: string;
   ClaveNueva: string;
 }
 
-
 const UpdatePassword = () => {
-  const [claveActual, setClaveActual] = useState("");
-  const [claveNueva, setClaveNueva] = useState("");
-  const [mensaje, setMensaje] = useState("");
-  const [tipoMensaje, setTipoMensaje] = useState<"success" | "error">("success");
+  const [form, setForm] = useState<PassDTO>({
+    ClaveActual: "",
+    ClaveNueva: "",
+  });
 
+  const [feedback, setFeedback] = useState<{ mensaje: string; tipo: "success" | "error" } | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setMensaje("");
-
-    const payload: PassDTO = {
-     
-      ClaveActual: claveActual,
-      ClaveNueva: claveNueva,
-    };
-
-    const response = await FetchApi({
-      path: "/Usuario/editpass",
-      method: "PUT",
-      payload,
-      requiresAuth: true,
-      token: localStorage.getItem("token") || "",
-    });
-
-    if (response.code === 200) {
-      setTipoMensaje("success");
-      setMensaje(" Contraseña actualizada correctamente");
-    } else {
-      setTipoMensaje("error");
-      setMensaje(` ${response.message}`);
-    }
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
+
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setFeedback(null);
+
+      const response = await FetchApi({
+        path: "/Usuario/editpass",
+        method: "PUT",
+        payload: form,
+        requiresAuth: true,
+        token: localStorage.getItem("token") || "",
+      });
+
+      if (response.code === 200) {
+        setFeedback({ tipo: "success", mensaje: "Contraseña actualizada correctamente" });
+      } else {
+        setFeedback({ tipo: "error", mensaje: response.message });
+      }
+    },
+    [form]
+  );
 
   return (
     <Container maxWidth="sm">
@@ -59,12 +56,12 @@ const UpdatePassword = () => {
           Actualizar Contraseña
         </Typography>
         <form onSubmit={handleSubmit}>
-        
           <TextField
             label="Contraseña Actual"
             type="password"
-            value={claveActual}
-            onChange={(e) => setClaveActual(e.target.value)}
+            name="ClaveActual"
+            value={form.ClaveActual}
+            onChange={handleChange}
             fullWidth
             required
             margin="normal"
@@ -72,8 +69,9 @@ const UpdatePassword = () => {
           <TextField
             label="Nueva Contraseña"
             type="password"
-            value={claveNueva}
-            onChange={(e) => setClaveNueva(e.target.value)}
+            name="ClaveNueva"
+            value={form.ClaveNueva}
+            onChange={handleChange}
             fullWidth
             required
             margin="normal"
@@ -82,15 +80,14 @@ const UpdatePassword = () => {
             Actualizar
           </Button>
         </form>
-        {mensaje && (
-          <Alert severity={tipoMensaje} sx={{ mt: 3 }}>
-            {mensaje}
+        {feedback && (
+          <Alert severity={feedback.tipo} sx={{ mt: 3 }}>
+            {feedback.mensaje}
           </Alert>
         )}
       </Box>
     </Container>
   );
 };
-
 
 export default UpdatePassword;
