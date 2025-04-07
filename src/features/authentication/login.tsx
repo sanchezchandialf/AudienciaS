@@ -6,6 +6,7 @@ import { useAuth } from '../../context/useAuth';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import toast from 'react-hot-toast';
 import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 type FormValues = {
@@ -26,7 +27,7 @@ const LoginPage: FC = () => {
   });
 
   const { loginUser } = useAuth();
-
+  const navigate=useNavigate();
   const handleLogin = async (form: FormValues) => {
     try {
       await loginUser(form.email, form.password);
@@ -120,7 +121,7 @@ const LoginPage: FC = () => {
               }}
               onClick={() => {
                 // Aquí puedes agregar la lógica para redirigir a la página de recuperación de contraseña
-                console.log("Redirigir a la página de recuperación de contraseña");
+                 navigate("/"); 
               }}
             >
               ¿Has olvidado tu contraseña?
