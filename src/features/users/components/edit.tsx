@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import {
   TextField,
   Button,
@@ -10,13 +11,14 @@ import {
 import { FetchApi } from "../../../api/useAxios";
 
 
+
 interface PassDTO {
   ClaveActual: string;
   ClaveNueva: string;
 }
 
+
 const UpdatePassword = () => {
-  const [correo, setCorreo] = useState("");
   const [claveActual, setClaveActual] = useState("");
   const [claveNueva, setClaveNueva] = useState("");
   const [mensaje, setMensaje] = useState("");
@@ -89,5 +91,6 @@ const UpdatePassword = () => {
     </Container>
   );
 };
+
 
 export default UpdatePassword;
