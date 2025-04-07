@@ -109,7 +109,23 @@ const LoginPage: FC = () => {
           )}
         />
       </Box>
-
+          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 2 }}>
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              sx={{
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": { color: "#063565" },
+              }}
+              onClick={() => {
+                // Aquí puedes agregar la lógica para redirigir a la página de recuperación de contraseña
+                console.log("Redirigir a la página de recuperación de contraseña");
+              }}
+            >
+              ¿Has olvidado tu contraseña?
+            </Typography>
+          </Box>
       {/* Botón de Iniciar Sesión */}
       <Button
         type="submit"
