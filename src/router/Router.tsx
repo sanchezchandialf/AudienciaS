@@ -10,7 +10,8 @@ import { UserProvider } from "../context/useAuth.tsx"; // Importa aquí
 import Calendario from "../features/calendar/calendar.tsx";
 import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
 import EditList from "../features/users/components/EditList.tsx";
-import UpdatePassword from "../features/users/components/edit.tsx";
+import RecupForm from "../features/authentication/components/recup.tsx";
+import UpdatePassword from "../features/users/components/Edit.tsx";
 
 const Router = createBrowserRouter([
   {
@@ -82,6 +83,12 @@ const Router = createBrowserRouter([
           <AuthorizedComponent>
             <UpdatePassword/>
           </AuthorizedComponent>
+        )
+      },
+      {
+        path:BrowserRoutes.NEWPASSWORD,
+        element:(
+          <RecupForm/>
         )
       }
     ],
