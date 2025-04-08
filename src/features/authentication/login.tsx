@@ -121,7 +121,7 @@ const LoginPage: FC = () => {
               }}
               onClick={() => {
                 // Aquí puedes agregar la lógica para redirigir a la página de recuperación de contraseña
-                 navigate("/"); 
+                 navigate("/newpassword"); 
               }}
             >
               ¿Has olvidado tu contraseña?
