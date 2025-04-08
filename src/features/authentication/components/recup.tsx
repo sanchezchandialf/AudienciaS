@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { Controller } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 
 const RecupForm: React.FC = () => {
     const [correo, setCorreo] = useState<string>('');
+    const { control, handleSubmit } = useForm();
 
     useEffect(() => {
         const storeduser = localStorage.getItem('user');
@@ -12,10 +13,17 @@ const RecupForm: React.FC = () => {
             const maskedCorreo = userObj.correo.replace(/.(?=.{4}@)/g, '*');
             setCorreo(maskedCorreo);
         }
-    }, []); 
+    }, []);
+
+    const onSubmit = (data: any) => {
+        console.log("Correo ingresado:", data.email);
+      
+    };
 
     return (
         <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
             display="flex"
             flexDirection="column"
             alignItems="center"
@@ -26,12 +34,15 @@ const RecupForm: React.FC = () => {
                 Recuperar Contraseña
             </Typography>
 
-            <Typography>
-                Se enviará un código de verificación a {correo} con instrucciones para restablecer tu contraseña. Ingresa tu correo completo:
+            <Typography sx={{ mb: 2 }}>
+                Se enviará un código de verificación a <strong>{correo}</strong> con instrucciones para restablecer tu contraseña. Ingresa tu correo completo:
             </Typography>
 
             <Controller
                 name="email"
+                control={control}
+                defaultValue=""
+                rules={{ required: 'El correo es requerido' }}
                 render={({ field }) => (
                     <TextField
                         {...field}
@@ -40,10 +51,12 @@ const RecupForm: React.FC = () => {
                         variant="outlined"
                         fullWidth
                         margin="normal"
+                        required
                     />
                 )}
             />
-            <Button variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+
+            <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
                 Enviar
             </Button>
         </Box>
