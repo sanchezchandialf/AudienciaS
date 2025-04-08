@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { Controller } from 'react-hook-form';
 
 const RecupForm: React.FC = () => {
-    const[correo,setCorreo]= useState<string>('');
-        
-    const storeduser=localStorage.getItem('user');
-    if (storeduser) {
-        const userObj = JSON.parse(storeduser);
-        const maskedCorreo = userObj.correo.replace(/.(?=.{4}@)/g, '*');
-        setCorreo(maskedCorreo);
-    }
+    const [correo, setCorreo] = useState<string>('');
+
+    useEffect(() => {
+        const storeduser = localStorage.getItem('user');
+        if (storeduser) {
+            const userObj = JSON.parse(storeduser);
+            const maskedCorreo = userObj.correo.replace(/.(?=.{4}@)/g, '*');
+            setCorreo(maskedCorreo);
+        }
+    }, []); 
+
     return (
         <Box
             display="flex"
@@ -24,8 +27,9 @@ const RecupForm: React.FC = () => {
             </Typography>
 
             <Typography>
-                Se enviara un codigo de verificacion a  {correo} con instrucciones para restablecer tu contraseña, ingrese su correo completo 
+                Se enviará un código de verificación a {correo} con instrucciones para restablecer tu contraseña. Ingresa tu correo completo:
             </Typography>
+
             <Controller
                 name="email"
                 render={({ field }) => (
@@ -45,7 +49,5 @@ const RecupForm: React.FC = () => {
         </Box>
     );
 };
-
-
 
 export default RecupForm;
