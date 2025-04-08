@@ -9,6 +9,7 @@ export enum BrowserRoutes {
     AUDIENCIA_DETALLE='/audienciadetalle',
     EDITAR='/edit',
     EDITPASWWORD='/editpassword',
+    NEWPASSWORD='/newpassword',
   }
   
   
