@@ -2,23 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 
+import { FetchApi } from '../../../api/useAxios';
+import { useNavigate } from 'react-router-dom';
+
 const RecupForm: React.FC = () => {
     const [correo, setCorreo] = useState<string>('');
-    const { control, handleSubmit } = useForm();
+    const { control, handleSubmit } = useForm<Auth>(); 
+    const navigate= useNavigate(); // hook de navegación
+    interface Auth {
+        destinatario:string
+    }
 
-    useEffect(() => {
-        const storeduser = localStorage.getItem('user');
-        if (storeduser) {
-            const userObj = JSON.parse(storeduser);
-            const maskedCorreo = userObj.correo.replace(/.(?=.{4}@)/g, '*');
-            setCorreo(maskedCorreo);
-        }
-    }, []);
 
-    const onSubmit = (data: any) => {
-        console.log("Correo ingresado:", data.email);
-      
-    };
+   
+
+    const onSubmit = async (data: Auth) => { 
+        
+         try {
+              const response = await FetchApi({
+                path: "/Email/Auth",
+                method: "POST",
+                requiresAuth: true,
+                payload: data,
+              });
+        
+              if ((response.code === 200 || response.code === 201) && response.data) {
+                console.log("Formulario enviado con éxito", response.data);
+                setCorreo(data.destinatario); // Guardar el correo en el estado
+                alert("Se ha enviado un código de verificación a tu correo electrónico.");
+                navigate("/recuperar",{state:{correo:data.destinatario}}); // Redirigir a la pagina de recuperacion 
+              } else {
+                console.error("Error al enviar el formulario", response);
+              }
+            } catch (error) {
+              console.error("Error en el envío del formulario", error);
+            }
+          };
+
+
 
     return (
         <Box
@@ -39,7 +60,7 @@ const RecupForm: React.FC = () => {
             </Typography>
 
             <Controller
-                name="email"
+                name="destinatario"
                 control={control}
                 defaultValue=""
                 rules={{ required: 'El correo es requerido' }}
