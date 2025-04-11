@@ -12,6 +12,7 @@ import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
 import EditList from "../features/users/components/EditList.tsx";
 import RecupForm from "../features/authentication/components/recup.tsx";
 import UpdatePassword from "../features/users/components/edit.tsx";
+import RestablecerClave from "../features/authentication/components/newpass.tsx";
 
 
 
@@ -91,6 +92,14 @@ const Router = createBrowserRouter([
         path:BrowserRoutes.NEWPASSWORD,
         element:(
           <RecupForm/>
+        )
+      },
+      {
+        path:BrowserRoutes.PASSWORD,
+        element:(
+          
+            <RestablecerClave/>
+         
         )
       }
     ],

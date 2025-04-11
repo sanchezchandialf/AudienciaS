@@ -4,6 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 
 import { FetchApi } from '../../../api/useAxios';
 import { useNavigate } from 'react-router-dom';
+import { BrowserRoutes } from '../../../router/BrowserRoutes';
 
 const RecupForm: React.FC = () => {
     const [correo, setCorreo] = useState<string>('');
@@ -30,7 +31,7 @@ const RecupForm: React.FC = () => {
                 console.log("Formulario enviado con éxito", response.data);
                 setCorreo(data.destinatario); // Guardar el correo en el estado
                 alert("Se ha enviado un código de verificación a tu correo electrónico.");
-                navigate("/recuperar",{state:{correo:data.destinatario}}); // Redirigir a la pagina de recuperacion 
+                navigate(BrowserRoutes.PASSWORD,{state:{correo:data.destinatario}}); // Redirigir a la pagina de recuperacion 
               } else {
                 console.error("Error al enviar el formulario", response);
               }
