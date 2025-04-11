@@ -21,7 +21,7 @@ const RecupForm: React.FC = () => {
         
          try {
               const response = await FetchApi({
-                path: "/Email/Auth",
+                path: "/Email/auth",
                 method: "POST",
                 requiresAuth: true,
                 payload: data,
