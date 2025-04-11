@@ -11,7 +11,7 @@ import Calendario from "../features/calendar/calendar.tsx";
 import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
 import EditList from "../features/users/components/EditList.tsx";
 import RecupForm from "../features/authentication/components/recup.tsx";
-import UpdatePassword from "../features/users/components/Edit.tsx";
+import UpdatePassword from "../features/users/components/edit.tsx";
 
 
 
@@ -83,7 +83,7 @@ const Router = createBrowserRouter([
         path:BrowserRoutes.EDITPASWWORD,
         element:(
           <AuthorizedComponent>
-           <UpdatePassword/>
+            <UpdatePassword/>
           </AuthorizedComponent>
         )
       },
