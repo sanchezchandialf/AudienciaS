@@ -40,7 +40,7 @@ const RestablecerClave: React.FC = () => {
 
       if (response.code === 200) {
         setSuccess('Contraseña actualizada correctamente.');
-        setTimeout(() => navigate('/login'), 3000);
+        setTimeout(() => navigate('/'), 3000);
       } else {
         setError(response.data || 'Error al actualizar la contraseña');
       }
