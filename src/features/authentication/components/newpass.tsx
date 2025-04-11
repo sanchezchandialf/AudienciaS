@@ -31,7 +31,6 @@ const RestablecerClave: React.FC = () => {
       const response = await FetchApi({
         path: '/Usuario/newpass',
         method: 'PUT',
-        requiresAuth: true,
         payload: {
           destinatario: correo,
           claveNueva: data.claveNueva,
