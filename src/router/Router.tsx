@@ -11,8 +11,9 @@ import Calendario from "../features/calendar/calendar.tsx";
 import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
 import EditList from "../features/users/components/EditList.tsx";
 import RecupForm from "../features/authentication/components/recup.tsx";
-import UpdatePassword from "../features/users/components/edit.tsx";
+import UpdatePassword from "../features/users/components/Edit.tsx";
 import RestablecerClave from "../features/authentication/components/newpass.tsx";
+import OptionsUsers from "../features/users/components/options.tsx";
 
 
 
@@ -100,6 +101,14 @@ const Router = createBrowserRouter([
           
             <RestablecerClave/>
          
+        )
+      },
+      {
+        path:BrowserRoutes.SETUPUSER,
+        element:(
+          <AuthorizedComponent>
+              <OptionsUsers/>
+          </AuthorizedComponent>
         )
       }
     ],

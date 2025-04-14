@@ -20,12 +20,12 @@ const cardsData = [
       path: "/calendario"
     },
    
-   
+
     {
       icon: <SettingsIcon color="primary" />,
       title: "Mi usuario",
       description: "",
-      path: "/editpassword"
+      path: "/setupuser"
     },
   ];
 

@@ -10,7 +10,8 @@ export enum BrowserRoutes {
     EDITAR='/edit',
     EDITPASWWORD='/editpassword',
     NEWPASSWORD='/newpassword',
-    PASSWORD='/password'
+    PASSWORD='/password',
+    SETUPUSER='/setupuser'
   }
   
   
