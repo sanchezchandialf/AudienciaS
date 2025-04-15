@@ -14,6 +14,7 @@ import RecupForm from "../features/authentication/components/recup.tsx";
 import UpdatePassword from "../features/users/components/Edit.tsx";
 import RestablecerClave from "../features/authentication/components/newpass.tsx";
 import OptionsUsers from "../features/users/components/options.tsx";
+import NewUser from "../features/users/components/NewUser.tsx";
 
 
 
@@ -108,6 +109,14 @@ const Router = createBrowserRouter([
         element:(
           <AuthorizedComponent>
               <OptionsUsers/>
+          </AuthorizedComponent>
+        )
+      },
+      {
+        path:BrowserRoutes.NEWUSER,
+        element:(
+          <AuthorizedComponent>
+              <NewUser/>
           </AuthorizedComponent>
         )
       }

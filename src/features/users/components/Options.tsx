@@ -1,5 +1,6 @@
 import { Box, Button, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
+import { BrowserRoutes } from "../../../router/BrowserRoutes"
 
 const Data=[
 
@@ -11,7 +12,7 @@ const Data=[
 {
     title:"Agregar Usuario",
     description:"Agrega un nuevo usuario",
-    path:"/newuser"
+    path:BrowserRoutes.NEWUSER,
 
 },
 {
