@@ -11,9 +11,9 @@ import Calendario from "../features/calendar/calendar.tsx";
 import ListaPersonalizada from "../features/users/components/ListAudiencia.tsx";
 import EditList from "../features/users/components/EditList.tsx";
 import RecupForm from "../features/authentication/components/recup.tsx";
-import UpdatePassword from "../features/users/components/Edit.tsx";
+import UpdatePassword from "../features/users/components/edit.tsx";
 import RestablecerClave from "../features/authentication/components/newpass.tsx";
-import OptionsUsers from "../features/users/components/options.tsx";
+import OptionsUsers from "../features/users/components/Options.tsx";
 import NewUser from "../features/users/components/NewUser.tsx";
 
 
